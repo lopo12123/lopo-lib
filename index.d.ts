@@ -5,10 +5,11 @@ declare module "lopo-lib" {
              * @description depth first search
              * @param {Object} tree whole tree
              * @param {(Object) => boolean} condition target condition
-             * @param {string|undefined} childKey the groupName of child nodes(defaults to 'children')
-             * @param {string|Function|undefined} resultFilter what to return(return the whole node when undefined)
+             * @param {string} [childKey = 'children'] the groupName of child nodes(defaults to 'children')
+             * @param {string|Function} [resultFilter] what to return(return the whole node when undefined)
+             * @return {Object|null}
              */
-            dfs: (tree: object, condition: (node: object) => boolean, childKey?: string, resultFilter?: string) => object|null
+            dfs: (tree: object, condition: (node: object) => boolean, childKey?: string, resultFilter?: string | Function) => object|null
 
             bfs: () => object|null
         }
