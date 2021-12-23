@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/lopo12123/lopo-lib/issues"
   },
-  "homepage": "https://github.com/lopo12123/lopo-lib#readme"
+  "homepage": "https://github.com/lopo12123/lopo-lib#readme",
+  "dependencies": {
+    "uuid": "^8.3.2"
+  }
 }
