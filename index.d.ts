@@ -3,26 +3,26 @@ declare module "lopo-lib" {
         interface lopo {
             // region dfs
             dfs:
-                <T extends object, K extends any>
+                <TreeNode extends object, FilteredNode extends any>
                 (
-                    tree: T,
-                    condition: (node: T) => boolean,
+                    tree: TreeNode,
+                    condition: (node: TreeNode) => boolean,
                     childKey?: string,
-                    resultFilter?: string | ((node: T) => K)
+                    resultFilter?: string | ((node: TreeNode) => FilteredNode)
                 )
-                    => object | K | null
+                    => TreeNode | FilteredNode | any | null
             // endregion
 
             // region t2a
             t2a:
-                <T extends object, K extends any>
+                <TreeNode extends object, FilteredNode extends any>
                 (
-                    tree: T,
+                    tree: TreeNode,
                     childKey?: string,
-                    condition?: (node: T) => boolean,
-                    resultFilter?: string | ((node: T) => K)
+                    condition?: (node: TreeNode) => boolean,
+                    resultFilter?: string | ((node: TreeNode) => FilteredNode)
                 )
-                    => (T | K | any) []
+                    => (TreeNode | FilteredNode | any) []
             // endregion
         }
     }
