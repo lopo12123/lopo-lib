@@ -1,17 +1,29 @@
 declare module "lopo-lib" {
     namespace LopoLib {
         interface lopo {
-            /**
-             * @description depth first search
-             * @param {Object} tree whole tree
-             * @param {(Object) => boolean} condition target condition
-             * @param {string} [childKey = 'children'] the groupName of child nodes(defaults to 'children')
-             * @param {string|Function} [resultFilter] what to return(return the whole node when undefined)
-             * @return {Object|null}
-             */
-            dfs: (tree: object, condition: (node: object) => boolean, childKey?: string, resultFilter?: string | Function) => object|null
+            // region dfs
+            dfs:
+                <T extends object, K extends any>
+                (
+                    tree: T,
+                    condition: (node: T) => boolean,
+                    childKey?: string,
+                    resultFilter?: string | ((node: T) => K)
+                )
+                    => object | K | null
+            // endregion
 
-            bfs: () => object|null
+            // region t2a
+            t2a:
+                <T extends object, K extends any>
+                (
+                    tree: T,
+                    childKey?: string,
+                    condition?: (node: T) => boolean,
+                    resultFilter?: string | ((node: T) => K)
+                )
+                    => (T | K | any) []
+            // endregion
         }
     }
 
