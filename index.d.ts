@@ -1,20 +1,36 @@
 declare module "lopo-lib" {
     namespace LopoLib {
-        // region [types] tree and array
-        /**
-         * the default key of children is 'children'.
-         * <br/>you can change it in the param 'childKey' in `t2a` if need
-         */
-        type Tree = {
-            [k: string]: any
-            id?: string
-            children: Tree[]
+        // region [types] dfs and bfs
+        namespace DfsAndBfs {
+            type Tree = {
+                [k: string]: any
+                children: Tree[]
+            }
         }
-        /**
-         *
-         */
-        type Array1 = { id: string, info: any, parent?: string }[]
-        type Array2 = { nodes: { id: string, info: any }[], links: { from: string, to: string }[] }
+        // endregion
+
+        // region [types] tree and array
+        namespace TreeAndArray {
+            /**
+             * the default key of children is 'children'.
+             * <br/>you can change it by using the param 'childKey' if need
+             */
+            type Tree = {
+                [k: string]: any
+                id?: string
+                children: Tree[]
+            }
+            /**
+             * the default key of id is 'id'.
+             * <br/>you can change it by using the param 'idKey' if need
+             */
+            type Array1 = { id: string, info: any, parent?: string }[]
+            /**
+             * the default key of id is 'id'.
+             * <br/>you can change it by using the param 'idKey' if need
+             */
+            type Array2 = { nodes: { id: string, info: any }[], links: { from: string, to: string }[] }
+        }
         // endregion
 
         interface lopo {
@@ -24,14 +40,13 @@ declare module "lopo-lib" {
              * <br/>{@link https://github.com/lopo12123/lopo-lib#readme}
              */
             dfs:
-                <TreeNode extends object, FilteredNode extends any>
                 (
-                    tree: TreeNode,
-                    condition: (node: TreeNode) => boolean,
+                    tree: DfsAndBfs.Tree,
+                    condition: (node: DfsAndBfs.Tree) => boolean,
                     childKey?: string,
-                    resultFilter?: string | ((node: TreeNode) => FilteredNode)
+                    resultFilter?: string | ((node: DfsAndBfs.Tree) => any)
                 )
-                    => TreeNode | FilteredNode | null | any
+                    => DfsAndBfs.Tree | null | any
             // endregion
 
             // region t2a
@@ -49,13 +64,13 @@ declare module "lopo-lib" {
              */
             t2a:
                 (
-                    tree: Tree,
+                    tree: TreeAndArray.Tree,
                     childKey?: string,
-                    condition?: (node: Tree) => boolean,
-                    resultFilter?: string | ((node: Tree) => any),
+                    condition?: (node: TreeAndArray.Tree) => boolean,
+                    resultFilter?: string | ((node: TreeAndArray.Tree) => any),
                     type?: 1 | 2
                 )
-                    => Array1 | Array2
+                    => TreeAndArray.Array1 | TreeAndArray.Array2
             // endregion
 
             // region a2t
@@ -69,11 +84,11 @@ declare module "lopo-lib" {
              */
             a2t:
                 (
-                    flattenedArray: Array1 | Array2,
+                    flattenedArray: TreeAndArray.Array1 | TreeAndArray.Array2,
                     idKey?: string,
                     childKey?: string
                 )
-                    => Tree
+                    => TreeAndArray.Tree
             // endregion
         }
     }
