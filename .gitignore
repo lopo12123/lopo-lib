@@ -8,6 +8,7 @@ dist.*
 *.rar
 *.7z
 
+test
 
 # local env files
 .env.local
@@ -26,4 +27,3 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
-test
