@@ -11,9 +11,10 @@
     "url": "git+https://github.com/lopo12123/lopo-lib.git"
   },
   "keywords": [
-    "wasm",
     "lopo",
-    "commonly-used-function"
+    "commonly-used-function",
+    "search",
+    "tree flatten"
   ],
   "author": "lopo",
   "license": "MIT",
