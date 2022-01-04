@@ -122,6 +122,24 @@ declare module "lopo-lib" {
         )
             => Operate_tree[] | null
         // endregion
+
+        // region append
+        /**
+         * @description append some nodes to the target node
+         * <br/>{@link https://github.com/lopo12123/lopo-lib#append}
+         * <br/>If you don't want (or don't need to) fill in some parameters
+         * <br/>but need to fill in some parameters behind it, please use null
+         * <br/>as a parameter placeholder (you can use it anywhere unless it`s required)
+         * <br/>For example: you can use it like `append(arg0, args1, null, arg3)`
+         */
+        append: (
+            tree: Operate_tree,
+            condition: (node: Operate_tree) => boolean,
+            childKey?: string,
+            clearBeforeAdd?: boolean
+        )
+            => boolean
+        // endregion
     }
     // endregion
 
@@ -130,6 +148,7 @@ declare module "lopo-lib" {
     const t2a: lopo["t2a"]
     const a2t: lopo["a2t"]
     const crop: lopo["crop"]
+    const append: lopo["append"]
     // endregion
 
     module.exports = {
@@ -137,6 +156,6 @@ declare module "lopo-lib" {
 
         t2a, a2t,
 
-        crop,
+        crop, append,
     }
 }
