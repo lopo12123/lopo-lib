@@ -8,6 +8,35 @@ some useful method
 
 ---  
 
+### Import  
+```js
+// here i use 'dfs' for example
+
+// 1 esm usage
+// 1.1 import all
+import lopo from 'lopo-lib'
+let targetNode = lopo.dfs(/** ... */)
+
+// 1.2 import some
+import {dfs} from 'lopo-lib'
+let targetNode = dfs(/** ... */)
+
+// 2 cjs usage
+// 2.1 import all
+const lopo = require('lopo-lib')
+lopo.dfs(/** ... */)
+
+// 2.2 import some
+const dfs = require('lopo-lib').dfs
+dfs(/** ... */)
+
+// 2.3 import some
+const { dfs } = require('lopo-lib')
+dfs(/** ... */)
+```
+
+---  
+
 #### <a id="menu" name="menu">Menu</a>
 <a id="menu_dfs" href="#dfs">dfs</a>  
 <a id="menu_bfs" href="#bfs">bfs</a>  
