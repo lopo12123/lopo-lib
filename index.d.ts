@@ -40,6 +40,14 @@ declare module "lopo-lib" {
      * @description interface of the module 'lopo-lib'
      */
     interface lopo {
+        // region clone
+        /**
+         * @description deep clone an object with all its properties and methods
+         * <br/>{@link https://github.com/lopo12123/lopo-lib#clone}
+         */
+        clone: <T>(originInput: T) => T
+        // endregion
+
         // region dfs
         /**
          * @description depth first search
@@ -135,6 +143,7 @@ declare module "lopo-lib" {
         append: (
             tree: Operate_tree,
             condition: (node: Operate_tree) => boolean,
+            nodes: Operate_tree[],
             childKey?: string,
             clearBeforeAdd?: boolean
         )
@@ -163,6 +172,7 @@ declare module "lopo-lib" {
     // endregion
 
     // region [lopo] export
+    const clone: lopo["clone"]
     const dfs: lopo["dfs"]
     const t2a: lopo["t2a"]
     const a2t: lopo["a2t"]
@@ -172,6 +182,7 @@ declare module "lopo-lib" {
     // endregion
 
     module.exports = {
+        clone,
         dfs,
         t2a, a2t,
         crop, append, move
