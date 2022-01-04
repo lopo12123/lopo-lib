@@ -140,6 +140,25 @@ declare module "lopo-lib" {
         )
             => boolean
         // endregion
+
+        // region move
+        /**
+         * @description cut the source node as a branch and attach it to the target node (as a child node)
+         * <br/>{@link https://github.com/lopo12123/lopo-lib#move}
+         * <br/> ---
+         * <br/>some thing about the 'return':
+         * <br/>the function will return an array which means [result, reason]
+         * <br/>result: `boolean`, if the move succeed or failed
+         * <br/>reason: `string`, the reason why `move` failed (or just 'success' when reason is `true`)
+         */
+        move: (
+            tree: Operate_tree,
+            sourceCondition: (node: Operate_tree) => boolean,
+            targetCondition: (node: Operate_tree) => boolean,
+            childKey?: string
+        )
+            => [boolean, string]
+        // endregion
     }
     // endregion
 
@@ -149,13 +168,12 @@ declare module "lopo-lib" {
     const a2t: lopo["a2t"]
     const crop: lopo["crop"]
     const append: lopo["append"]
+    const move: lopo["move"]
     // endregion
 
     module.exports = {
         dfs,
-
         t2a, a2t,
-
-        crop, append,
+        crop, append, move
     }
 }
