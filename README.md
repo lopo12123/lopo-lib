@@ -1,6 +1,9 @@
 ## lopo-lib
 some useful method  
 
+author: lopo  
+<a href="mailto:lopoflyfly@gmail.com" title="contact me">click here to contact me</a>
+
 ---  
 
 ### Installation  
