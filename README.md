@@ -42,6 +42,8 @@ dfs(/** ... */)
 <a id="menu_bfs" href="#bfs">bfs</a>  
 <a id="menu_t2a" href="#t2a">t2a</a>  
 <a id="menu_a2t" href="#a2t">a2t</a>  
+<a id="menu_crop" href="#crop">crop</a>  
+<a id="menu_append" href="#append">append</a>  
 
 ---
 
@@ -493,7 +495,7 @@ console.log(tree4_1)
 // ]
 ```  
 
-- **Operate(Crop)**  
+- **Operate(Crop、append & ??)**  
 - <a id="crop" href="#menu_crop">crop</a>  
 ```js
 // 0. create a tree object
@@ -627,6 +629,126 @@ console.log(croppedTree3)
 // }
 // [ { id: '4', name: 'node 4', children: [] } ]
 ```  
+
+- <a id="append" href="#menu_append">append</a>
+```js
+// 0. create a tree object
+const tree = {
+    id: '1',
+    name: 'node 1',
+    children: [
+        {
+            id: '2',
+            name: 'node 2'
+        }
+    ]
+}
+const nodesToAppend = [
+    {id: '3', name: 'node 3'},
+    {id: '4', name: 'node 4'}
+]
+
+// 1. default
+const result1 = append(
+    tree,
+    (node) => {
+        return node.id === '1'
+    }
+)
+console.log(result1)
+console.log(tree)
+// output:
+// true
+// {
+//     id: '1',
+//     name: 'node 1',
+//     children: [
+//         { id: '2', name: 'node 2' },
+//         { id: '3', name: 'node 3' },
+//         { id: '4', name: 'node 4' }
+//     ]
+// }
+
+// 2. set 'childKey'
+const tree2 = {
+    id: '1',
+    name: 'node 1',
+    kids: [
+        {
+            id: '2',
+            name: 'node 2'
+        }
+    ]
+}
+const result2 = append(
+    tree2,
+    (node) => {
+        return node.id === '1'
+    },
+    'kids'
+)
+console.log(result2)
+console.log(tree2)
+// output:
+// true
+// {
+//     id: '1',
+//     name: 'node 1',
+//     kids: [
+//         { id: '2', name: 'node 2' },
+//         { id: '3', name: 'node 3' },
+//         { id: '4', name: 'node 4' }
+//     ]
+// }
+
+// 3. set 'clearBeforeAdd'
+const result3= append(
+    tree,
+    (node) => {
+        return node.id === '1'
+    },
+    nodesToAppend,
+    'children',
+    true
+)
+console.log(result3)
+console.log(tree)
+// output:
+// true
+// {
+//     id: '1',
+//     name: 'node 1',
+//     children: [
+//         { id: '3', name: 'node 3' },
+//         { id: '4', name: 'node 4' }
+//     ]
+// }
+
+// 4. you can use "null" or "undefined" as a placeholder in args
+const result4= append(
+    tree,
+    (node) => {
+        return node.id === '1'
+    },
+    nodesToAppend,
+    null,
+    true
+)
+console.log(result4)
+console.log(tree)
+// output:
+// true
+// {
+//     id: '1',
+//     name: 'node 1',
+//     children: [
+//         { id: '3', name: 'node 3' },
+//         { id: '4', name: 'node 4' }
+//     ]
+// }
+```  
+
+- another todo  
 
 
 I will update it continually...
