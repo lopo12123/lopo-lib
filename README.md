@@ -46,16 +46,59 @@ dfs(/** ... */)
 ---  
 
 ### <a id="menu" name="menu">Menu</a>
+<a id="menu_clone" href="#clone">0.1 clone (deep clone an object with all its properties and methods)</a>  
 <a id="menu_dfs" href="#dfs">1.1 dfs (depth first search)</a>  
 <a id="menu_bfs" href="#bfs">1.2 bfs (undo)</a>  
 <a id="menu_t2a" href="#t2a">2.1 t2a (tree to array)</a>  
 <a id="menu_a2t" href="#a2t">2.2 a2t (array to tree(s))</a>  
 <a id="menu_crop" href="#crop">3.1 crop (crop all the children from target node)</a>  
 <a id="menu_append" href="#append">3.2 append (append some nodes to the target node)</a>  
+<a id="menu_move" href="#move">3.3 move (cut the source node as a branch and attach it to the target node (as a child node))</a>  
 
 ---
 
-### Usage
+### Usage  
+**Clone**  
+- <a id="clone" href="#menu_clone">0.1 clone</a>  
+```js
+// default usage
+const obj1 = {
+    id: 11,
+    name: '22',
+    fn: () => { return 'fn' },
+    ff: function () { return 'ff' },
+    testBoolean: false,
+    testNull: null,
+    self: {
+        id: 11,
+        name: '22',
+        fn: () => { return 'fn' },
+        ff: function () { return 'ff' },
+        testBoolean: false,
+        testNull: null,
+    }
+}
+let obj2 = clone(obj1)
+console.log(obj2)
+// output:
+// {
+//     id: 11,
+//     name: '22',
+//     fn: [Function: fn],
+//     ff: [Function: ff],
+//     testBoolean: false,
+//     testNull: null,
+//     self: {
+//         id: 11,
+//         name: '22',
+//         fn: [Function: fn],
+//         ff: [Function: ff],
+//         testBoolean: false,
+//         testNull: null
+//     }
+// }
+```  
+
 **Search**  
 - <a id="dfs" href="#menu_dfs">1.1 dfs</a>  
 ```js
@@ -503,7 +546,7 @@ console.log(tree4_1)
 // ]
 ```  
 
-- **Operate(Crop、append & ??)**  
+- **Operate(crop、append & move)**  
 - <a id="crop" href="#menu_crop">3.1 crop</a>  
 ```js
 // 0. create a tree object
@@ -756,7 +799,69 @@ console.log(tree)
 // }
 ```  
 
-- another todo  
+- <a id="move" href="#menu_move">3.3 move</a>  
+```js
+// 0. create a tree object
+const tree = {
+    id: 1,
+    children: [
+        { id: 2 },
+        {
+            id: 3,
+            children: [ { id: 4} ]
+        }
+    ]
+}
+
+// 1. default usage
+const [result, reason] = move(
+    tree,
+    item => item.id === 4,
+    item => item.id === 2
+)
+
+console.log(result, reason)
+console.log(tree)
+// output:
+// true success
+// {
+//     id: 1,
+//     children: [
+//         { id: 2, children: [ { id: 4 } ] },
+//         { id: 3, children: [ ] }
+//     ]
+// }
+
+// 2. set 'childKey'
+const tree2 = {
+    id: 1,
+    kids: [
+        { id: 2 },
+        {
+            id: 3,
+            kids: [ { id: 4} ]
+        }
+    ]
+}
+const [result2, reason2] = move(
+    tree,
+    item => item.id === 4,
+    item => item.id === 2,
+    'kids'
+)
+
+console.log(result2, reason2)
+console.log(tree2)
+// output:
+// true success
+// {
+//     id: 1,
+//     kids: [
+//         { id: 2, kids: [ { id: 4 } ] },
+//         { id: 3, kids: [ ] }
+//     ]
+// }
+```
 
 
 I will update it continually...
