@@ -38,12 +38,12 @@ dfs(/** ... */)
 ---  
 
 #### <a id="menu" name="menu">Menu</a>
-<a id="menu_dfs" href="#dfs">dfs</a>  
-<a id="menu_bfs" href="#bfs">bfs</a>  
-<a id="menu_t2a" href="#t2a">t2a</a>  
-<a id="menu_a2t" href="#a2t">a2t</a>  
-<a id="menu_crop" href="#crop">crop</a>  
-<a id="menu_append" href="#append">append</a>  
+<a id="menu_dfs" href="#dfs">dfs (depth first search)</a>  
+<a id="menu_bfs" href="#bfs">bfs (undo)</a>  
+<a id="menu_t2a" href="#t2a">t2a (tree to array)</a>  
+<a id="menu_a2t" href="#a2t">a2t (array to tree(s))</a>  
+<a id="menu_crop" href="#crop">crop (crop all the children from target node)</a>  
+<a id="menu_append" href="#append">append (append some nodes to the target node)</a>  
 
 ---
 
