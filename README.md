@@ -142,7 +142,7 @@ console.log(findNode4)  // output: "{ name: 'Node 1-1' }"
 // undo
 ```
 
-- **Tree** & **Array**  
+- **Transition(Tree** & **Array)**  
 - <a id="t2a" href="#menu_t2a">t2a</a>  
 ```js
 // 0. create a tree object
@@ -492,5 +492,141 @@ console.log(tree4_1)
 //     }
 // ]
 ```  
+
+- **Operate(Crop)**  
+- <a id="crop" href="#menu_crop">crop</a>  
+```js
+// 0. create a tree object
+const tree = {
+    id: '1',
+    name: 'node 1',
+    children: [
+        {
+            id: '2',
+            name: 'node 2',
+            children: []
+        },
+        {
+            id: '3',
+            name: 'node 3',
+            children: [
+                {
+                    id: '4',
+                    name: 'node 4',
+                    children: []
+                }
+            ]
+        }
+    ]
+}
+
+// 1. default
+const croppedTree1 = crop(
+    tree,
+    (node) => {
+        return node.id === '3'
+    }
+)
+console.log(tree)
+console.log(croppedTree1)
+// output:
+// {
+//     id: '1',
+//     name: 'node 1',
+//     children: [
+//         { id: '2', name: 'node 2', children: [] },
+//         { id: '3', name: 'node 3', children: [] }
+//     ]
+// }
+// [ { id: '4', name: 'node 4', children: [] } ]
+
+// 2. set 'childKey'
+const tree2 = {
+    id: '1',
+    name: 'node 1',
+    kids: [
+        {
+            id: '2',
+            name: 'node 2',
+            kids: []
+        },
+        {
+            id: '3',
+            name: 'node 3',
+            kids: [
+                {
+                    id: '4',
+                    name: 'node 4',
+                    kids: []
+                }
+            ]
+        }
+    ]
+}
+const croppedTree2 = crop(
+    tree2,
+    (node) => {
+        return node.id === '3'
+    },
+    'kids'
+)
+console.log(tree2)
+console.log(croppedTree2)
+// output:
+// {
+//     id: '1',
+//     name: 'node 1',
+//     kids: [
+//         { id: '2', name: 'node 2', kids: [] },
+//         { id: '3', name: 'node 3', kids: [] }
+//     ]
+// }
+// [ { id: '4', name: 'node 4', kids: [] } ]
+
+// 3. set 'remove'
+const croppedTree3 = crop(
+    tree,
+    (node) => {
+        return node.id === '3'
+    },
+    'children',
+    true
+)
+console.log(tree)
+console.log(croppedTree3)
+// output:
+// {
+//     id: '1',
+//     name: 'node 1',
+//     children: [
+//         { id: '2', name: 'node 2', children: [] },
+//         { id: '3', name: 'node 3' }
+//     ]
+// }
+// [ { id: '4', name: 'node 4', children: [] } ]
+
+// 4. you can use "null" or "undefined" as a placeholder in args
+const croppedTree3 = crop(
+    tree,
+    (node) => {
+        return node.id === '3'
+    },
+    null,
+    true
+)
+console.log(tree)
+console.log(croppedTree3)
+// output:
+// {
+//     id: '1',
+//     name: 'node 1',
+//     children: [
+//         { id: '2', name: 'node 2', children: [] },
+//         { id: '3', name: 'node 3' }
+//     ]
+// }
+// [ { id: '4', name: 'node 4', children: [] } ]
+```  
+
 
 I will update it continually...
