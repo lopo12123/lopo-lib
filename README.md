@@ -40,7 +40,12 @@ dfs(/** ... */)
 
 ---  
 
-#### <a id="menu" name="menu">Menu</a>
+### Bugs
+- dfs: it will destroy the origin tree while search and return.
+
+---  
+
+### <a id="menu" name="menu">Menu</a>
 <a id="menu_dfs" href="#dfs">1.1 dfs (depth first search)</a>  
 <a id="menu_bfs" href="#bfs">1.2 bfs (undo)</a>  
 <a id="menu_t2a" href="#t2a">2.1 t2a (tree to array)</a>  
@@ -50,7 +55,7 @@ dfs(/** ... */)
 
 ---
 
-#### Usage
+### Usage
 **Search**  
 - <a id="dfs" href="#menu_dfs">1.1 dfs</a>  
 ```js
