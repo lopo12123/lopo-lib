@@ -2,11 +2,11 @@ declare module "lopo-lib" {
     // region [Search_xxx] dfs and bfs
     type Search_Tree = {
         [k: string]: any
-        children: Tree[]
+        children: Search_Tree[]
     }
     // endregion
 
-    // region [Trans_xxx] tree and array
+    // region [Trans_xxx] t2a and a2t
     /**
      * the default key of children is 'children'.
      * <br/>you can change it by using the param 'childKey' if need
@@ -14,7 +14,7 @@ declare module "lopo-lib" {
     type Trans_Tree = {
         [k: string]: any
         id?: string
-        children: Tree[]
+        children: Trans_Tree[]
     }
     /**
      * the default key of id is 'id'.
@@ -28,6 +28,13 @@ declare module "lopo-lib" {
     type Trans_Array2 = { nodes: { id: string, info: any }[], links: { from: string, to: string }[] }
     // endregion
 
+    // region [Operate_xxx] crop
+    type Operate_tree = {
+        [k: string]: any
+        children: Operate_tree[]
+    }
+    // endregion
+
     // region [lopo] module namespace
     /**
      * @description interface of the module 'lopo-lib'
@@ -36,7 +43,11 @@ declare module "lopo-lib" {
         // region dfs
         /**
          * @description depth first search
-         * <br/>{@link https://github.com/lopo12123/lopo-lib#readme}
+         * <br/>{@link https://github.com/lopo12123/lopo-lib#dfs}
+         * <br/>If you don't want (or don't need to) fill in some parameters
+         * <br/>but need to fill in some parameters behind it, please use null
+         * <br/>as a parameter placeholder (you can use it anywhere unless it`s required)
+         * <br/>For example: you can use it like `dfs(arg0, arg1, null, arg3)`
          */
         dfs:
             (
@@ -51,7 +62,7 @@ declare module "lopo-lib" {
         // region t2a
         /**
          * @description tree to array
-         * <br/>{@link https://github.com/lopo12123/lopo-lib#readme}
+         * <br/>{@link https://github.com/lopo12123/lopo-lib#t2a}
          * <br/>If you don't want (or don't need to) fill in some parameters
          * <br/>but need to fill in some parameters behind it, please use null
          * <br/>as a parameter placeholder (you can use it anywhere unless it`s required)
@@ -75,7 +86,7 @@ declare module "lopo-lib" {
         // region a2t
         /**
          * @description array to tree
-         * <br/>{@link https://github.com/lopo12123/lopo-lib#readme}
+         * <br/>{@link https://github.com/lopo12123/lopo-lib#a2t}
          * <br/>If you don't want (or don't need to) fill in some parameters
          * <br/>but need to fill in some parameters behind it, please use null
          * <br/>as a parameter placeholder (you can use it anywhere unless it`s required)
@@ -89,6 +100,28 @@ declare module "lopo-lib" {
             )
                 => Trans_Tree
         // endregion
+
+        // region crop
+        /**
+         * @description crop all the children from target node
+         * <br/>{@link https://github.com/lopo12123/lopo-lib#crop}
+         * <br/>If you don't want (or don't need to) fill in some parameters
+         * <br/>but need to fill in some parameters behind it, please use null
+         * <br/>as a parameter placeholder (you can use it anywhere unless it`s required)
+         * <br/>For example: you can use it like `crop(arg0, args1, null, arg3)`
+         * <br/> ---
+         * <br/>some thing about the param `remove`:
+         * <br/>`remove=false(default)`: the value of target node\`s 'children' will be set as an empty array.(`targetNode.children` will be `[]`)
+         * <br/>`remove=true`: the key 'children' will be removed from target node. (`targetNode.children` will be `undefined`)
+         */
+        crop: (
+            tree: Operate_tree,
+            condition: (node: Operate_tree) => boolean,
+            childKey?: string,
+            remove?: boolean
+        )
+            => Operate_tree[] | null
+        // endregion
     }
     // endregion
 
@@ -96,11 +129,14 @@ declare module "lopo-lib" {
     const dfs: lopo["dfs"]
     const t2a: lopo["t2a"]
     const a2t: lopo["a2t"]
+    const crop: lopo["crop"]
     // endregion
 
     module.exports = {
         dfs,
-        t2a,
-        a2t
+
+        t2a, a2t,
+
+        crop,
     }
 }
