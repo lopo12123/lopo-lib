@@ -38,18 +38,18 @@ dfs(/** ... */)
 ---  
 
 #### <a id="menu" name="menu">Menu</a>
-<a id="menu_dfs" href="#dfs">dfs (depth first search)</a>  
-<a id="menu_bfs" href="#bfs">bfs (undo)</a>  
-<a id="menu_t2a" href="#t2a">t2a (tree to array)</a>  
-<a id="menu_a2t" href="#a2t">a2t (array to tree(s))</a>  
-<a id="menu_crop" href="#crop">crop (crop all the children from target node)</a>  
-<a id="menu_append" href="#append">append (append some nodes to the target node)</a>  
+<a id="menu_dfs" href="#dfs">1.1 dfs (depth first search)</a>  
+<a id="menu_bfs" href="#bfs">1.2 bfs (undo)</a>  
+<a id="menu_t2a" href="#t2a">2.1 t2a (tree to array)</a>  
+<a id="menu_a2t" href="#a2t">2.2 a2t (array to tree(s))</a>  
+<a id="menu_crop" href="#crop">3.1 crop (crop all the children from target node)</a>  
+<a id="menu_append" href="#append">3.2 append (append some nodes to the target node)</a>  
 
 ---
 
 #### Usage
 **Search**  
-- <a id="dfs" href="#menu_dfs">dfs</a>  
+- <a id="dfs" href="#menu_dfs">1.1 dfs</a>  
 ```js
 // 0. create a tree object
 const tree = {
@@ -139,13 +139,13 @@ const findNode4 = dfs(
 console.log(findNode4)  // output: "{ name: 'Node 1-1' }"
 ```  
 
-- <a id="bfs" href="#menu_bfs">bfs</a>  
+- <a id="bfs" href="#menu_bfs">1.2 bfs</a>  
 ```js
 // undo
 ```
 
 - **Transition(Tree** & **Array)**  
-- <a id="t2a" href="#menu_t2a">t2a</a>  
+- <a id="t2a" href="#menu_t2a">2.1 t2a</a>  
 ```js
 // 0. create a tree object
 const tree = {
@@ -320,7 +320,7 @@ console.log(arr6)
 // }
 ```  
 
-- <a id="a2t" href="#menu_a2t">a2t</a>  
+- <a id="a2t" href="#menu_a2t">2.2 a2t</a>  
 ```js
 // t2a has two types of output, correspondingly, a2t has two types of input available
 // 0. create two array
@@ -496,7 +496,7 @@ console.log(tree4_1)
 ```  
 
 - **Operate(Crop、append & ??)**  
-- <a id="crop" href="#menu_crop">crop</a>  
+- <a id="crop" href="#menu_crop">3.1 crop</a>  
 ```js
 // 0. create a tree object
 const tree = {
@@ -630,7 +630,7 @@ console.log(croppedTree3)
 // [ { id: '4', name: 'node 4', children: [] } ]
 ```  
 
-- <a id="append" href="#menu_append">append</a>
+- <a id="append" href="#menu_append">3.2 append</a>
 ```js
 // 0. create a tree object
 const tree = {
