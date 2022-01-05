@@ -44,8 +44,12 @@ declare module "lopo-lib" {
         /**
          * @description deep clone an object with all its properties and methods
          * <br/>{@link https://github.com/lopo12123/lopo-lib#clone}
+         * <br/> ---
+         * <br/>some thing about the param `withFn`:
+         * <br/>`withFn=true(default)`: search all the properties and methods on the object and clone them
+         * <br/>`withFn=false`: just use JSON.parse and JSON.stringify to clone an object
          */
-        clone: <T>(originInput: T) => T
+        clone: <T>(originInput: T, withFn: boolean) => T
         // endregion
 
         // region dfs

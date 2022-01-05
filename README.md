@@ -61,7 +61,7 @@ dfs(/** ... */)
 **Clone**  
 - <a id="clone" href="#menu_clone">0.1 clone</a>  
 ```js
-// default usage
+// usage with 'withFn'(default to true)
 const obj1 = {
     id: 11,
     name: '22',
@@ -78,8 +78,10 @@ const obj1 = {
         testNull: null,
     }
 }
-let obj2 = clone(obj1)
+let obj2 = clone(obj1, true)  // equals to 'clone(obj1)'
+let obj3 = clone(obj1, false)
 console.log(obj2)
+console.log(obj3)
 // output:
 // {
 //     id: 11,
@@ -93,6 +95,18 @@ console.log(obj2)
 //         name: '22',
 //         fn: [Function: fn],
 //         ff: [Function: ff],
+//         testBoolean: false,
+//         testNull: null
+//     }
+// }
+// {
+//     id: 11,
+//     name: '22',
+//     testBoolean: false,
+//     testNull: null,
+//     self: {
+//         id: 11,
+//         name: '22',
 //         testBoolean: false,
 //         testNull: null
 //     }
