@@ -6,7 +6,7 @@ export class Queue {
      * @description max length
      * @private
      */
-    private readonly _max: number
+    private _max: number
 
     /**
      * @description current queue
@@ -79,5 +79,13 @@ export class Queue {
         else {
             return this._queue.push(...this._queue.splice(0, n))
         }
+    }
+
+    /**
+     * @description clear the queue and reset it`s max-length as `n` (if need)
+     */
+    public clear(n?: number) {
+        this._queue = []
+        this._max = n ?? this._max
     }
 }
