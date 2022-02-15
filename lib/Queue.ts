@@ -1,5 +1,5 @@
 /**
- * @description FIFO queue
+ * @description FIFO
  */
 export class Queue {
     /**
