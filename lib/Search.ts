@@ -1,10 +1,10 @@
 export abstract class Search {
-    private static _dfs<BranchNode extends object>(
+    private static _dfs<BranchNode extends {[k: string]: any}>(
         branchRoot: BranchNode,
         condition: (node: BranchNode) => boolean,
         childKey: string = 'children',
         resultFilter: (node: BranchNode) => any = node => node
-    ) {
+    ): any | null {
         // find target at root
         if(condition(branchRoot)) {
             return resultFilter(branchRoot)
@@ -41,7 +41,7 @@ export abstract class Search {
         condition: (node: TreeNode) => boolean,
         childKey: string = 'children',
         resultFilter: (node: TreeNode) => any = node => node
-    ) {
+    ): any | null {
         return Search._dfs(root, condition, childKey, resultFilter)
     }
 }
