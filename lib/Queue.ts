@@ -39,21 +39,24 @@ export class Queue<T> {
      * @description returns a shallow copy of current queue
      */
     public getQueue(): T[] {
-        return this._queue.slice(0, this._queue.length)
+        return this._queue.slice(0)
     }
 
     /**
      * @description push some items into the queue and return current length of the queue
      */
     public in(...items: T[]): number {
-        if(items.length + this._queue.length <= this._max) {  // still below max length
+        // below max length
+        if(items.length + this._queue.length <= this._max) {
             return this._queue.push(...items)
         }
-        else if(items.length >= this._max) {  // overflow: items.length > max
+        // overflow: items.length > max
+        else if(items.length >= this._max) {
             this._queue = items.slice(items.length - this._max)
             return this._max
         }
-        else {  // overflow: items.length < max
+        // overflow: items.length < max
+        else {
             const nextFirst = this._queue.length + items.length - this._max
             this._queue = [...this._queue.slice(nextFirst), ...items]
             return this._max
@@ -82,7 +85,7 @@ export class Queue<T> {
     }
 
     /**
-     * @description clear the queue and reset it`s max-length as `n` (if need)
+     * @description clear the queue and reset it`s max-length to `n` (if need)
      */
     public clear(n?: number): void {
         this._queue = []
