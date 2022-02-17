@@ -1,7 +1,7 @@
 /**
  * @description FIFO
  */
-export class Queue {
+export class Queue<T> {
     /**
      * @description max length
      * @private
@@ -12,13 +12,13 @@ export class Queue {
      * @description current queue
      * @private
      */
-    private _queue: any[] = []
+    private _queue: T[] = []
 
     /**
      * @description create a queue with max length
      */
-    public static create(max: number): Queue {
-        return new Queue(max)
+    public static create<_T>(max: number) {
+        return new Queue<_T>(max)
     }
 
     /**
@@ -38,14 +38,14 @@ export class Queue {
     /**
      * @description returns a shallow copy of current queue
      */
-    public getQueue() {
+    public getQueue(): T[] {
         return this._queue.slice(0, this._queue.length)
     }
 
     /**
      * @description push some items into the queue and return current length of the queue
      */
-    public in(...items: any[]): number {
+    public in(...items: T[]): number {
         if(items.length + this._queue.length <= this._max) {  // still below max length
             return this._queue.push(...items)
         }
@@ -63,28 +63,28 @@ export class Queue {
     /**
      * @description take n items from the queue
      */
-    public out(n: number) {
+    public out(n: number): T[] {
         return this._queue.splice(0, n)
     }
 
     /**
      * @description move the queue forward n positions, and the items dequeued at the head are re-queued in order
      */
-    public circle(n: number, reverse: boolean = false) {
+    public circle(n: number, reverse: boolean = false): void {
         if(reverse) {
             this._queue.reverse()
             this._queue.push(...this._queue.splice(0, n))
-            return this._queue.reverse()
+            this._queue.reverse()
         }
         else {
-            return this._queue.push(...this._queue.splice(0, n))
+            this._queue.push(...this._queue.splice(0, n))
         }
     }
 
     /**
      * @description clear the queue and reset it`s max-length as `n` (if need)
      */
-    public clear(n?: number) {
+    public clear(n?: number): void {
         this._queue = []
         this._max = n ?? this._max
     }
