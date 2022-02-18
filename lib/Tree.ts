@@ -15,9 +15,7 @@ export class Tree {
             id: _thisId,
             extData: ori.extData
         }
-        // remove the `extData` param if it`s value is `undefined`
-        if(_thisNode.extData === undefined) delete _thisNode.extData
-        // delete the `children` param
+        // delete the `children` field
         delete _thisNode.children
         // set parent`s id
         if(!!pid) _thisNode.parent = pid
@@ -38,9 +36,7 @@ export class Tree {
             id: _thisId,
             extData: ori.extData
         }
-        // remove the `extData` param if it`s value is `undefined`
-        if(_thisNode.extData === undefined) delete _thisNode.extData
-        // attach this node`s id into this parent`s `children` param
+        // attach this node`s id into this parent`s `children` field
         if(!!pid) container.forEach((item, index, arr) => {
             if(item.id === pid) arr[index].children?.push(_thisId)
         })
@@ -55,10 +51,18 @@ export class Tree {
     }
     /**
      * @description trans tree from `Multilayer` to `FlatArray`.
-     * <br/><b>Note:</b> if there is no `id` on the node, it will add an `id` for this node automatically.
+     * <br/><b>·</b> if there is no `id` on the node, it will add an `id` for this node automatically.
      */
     public static Multilayer2FlatArray(ori: Tree_Multilayer, keyed: 'parent'): Tree_FlatArray_PKeyed
+    /**
+     * @description trans tree from `Multilayer` to `FlatArray`.
+     * <br/><b>·</b> if there is no `id` on the node, it will add an `id` for this node automatically.
+     */
     public static Multilayer2FlatArray(ori: Tree_Multilayer, keyed: 'children'): Tree_FlatArray_CKeyed
+    /**
+     * @description trans tree from `Multilayer` to `FlatArray`.
+     * <br/><b>·</b> if there is no `id` on the node, it will add an `id` for this node automatically.
+     */
     public static Multilayer2FlatArray(ori: Tree_Multilayer, keyed: 'parent' | 'children'): Tree_FlatArray_PKeyed | Tree_FlatArray_CKeyed {
         const can: Tree_FlatArray_PKeyed | Tree_FlatArray_CKeyed = []
         if(keyed === 'parent') Tree._Multilayer2FlatArray_PKeyed(ori, can)
@@ -82,9 +86,7 @@ export class Tree {
             id: _thisId,
             extData: ori.extData
         }
-        // remove the `extData` param if it`s value is `undefined`
-        if(_thisNode.extData === undefined) delete _thisNode.extData
-        // delete the `children` param
+        // delete the `children` field
         delete _thisNode.children
         // store this node
         container.nodes.push(_thisNode)
@@ -101,7 +103,7 @@ export class Tree {
     }
     /**
      * @description trans tree from `Multilayer` to `NodeLink`.
-     * <br/><b>Note:</b> if there is no `id` on the node, it will add an `id` for this node automatically.
+     * <br/><b>·</b> if there is no `id` on the node, it will add an `id` for this node automatically.
      */
     public static Multilayer2NodeLink(ori: Tree_Multilayer) {
         const can: Tree_NodeLink = { nodes: [], links: [] }
@@ -119,8 +121,83 @@ export class Tree {
     // endregion
 
     // region NodeLink to FlatArray
-    public static NodeLink2FlatArray() {
-
+    /** NodeLink to FlatArray (with parent keyed) */
+    private static _NodeLink2FlatArray_PKeyed(ori: Tree_NodeLink, container: Tree_FlatArray_PKeyed) {
+        // get nodes and links
+        const { nodes, links } = ori
+        // look for all the nodes
+        nodes.forEach((node) => {
+            // if the node has no `id`, just ignore and skip it
+            if(!node.id) return
+            // generate this node
+            const _thisNode: Tree_FlatArray_PKeyed_Node = {
+                ...node,
+                extData: node.extData
+            }
+            // delete the `children` field
+            delete _thisNode.children
+            // search its parent in `links`
+            links.forEach((link) => {
+                if(node.id === link.to && !!link.from) {
+                    _thisNode.parent = link.from
+                }
+            })
+            // store this node
+            container.push(_thisNode)
+        })
+    }
+    /** NodeLink to FlatArray (with children keyed) */
+    private static _NodeLink2FlatArray_CKeyed(ori: Tree_NodeLink, container: Tree_FlatArray_CKeyed) {
+        // get nodes and links
+        const { nodes, links } = ori
+        // look for all the nodes
+        nodes.forEach((node) => {
+            // if the node has no `id`, just ignore and skip it
+            if(!node.id) return
+            // generate this node
+            const _thisNode: Tree_FlatArray_CKeyed_Node = {
+                ...node,
+                extData: node.extData
+            }
+            // reset the `children` field
+            _thisNode.children = []
+            // search its children in `links`
+            links.forEach((link) => {
+                if(node.id === link.from && !!link.to) {
+                    _thisNode.children!.push(link.to)
+                }
+            })
+            // delete the `children` field if it is empty
+            if(_thisNode.children!.length === 0) delete _thisNode.children
+            // store this node
+            container.push(_thisNode)
+        })
+    }
+    /**
+     * @description trans tree from `NodeLink` to `FlatArray`.
+     * <br/><b>·</b> if there is no `id` on the node, the node will be ignored.
+     * <br/><b>·</b> if there is no `id` on the link, the link works as well.
+     * <br/><b>·</b> if a node's `id` appears in the `to` field of two(or more) links, the last link will be used and all the rest links will be ignored.
+     */
+    public static NodeLink2FlatArray(ori: Tree_NodeLink, keyed: 'parent'): Tree_FlatArray_PKeyed
+    /**
+     * @description trans tree from `NodeLink` to `FlatArray`.
+     * <br/><b>·</b> if there is no `id` on the node, the node will be ignored.
+     * <br/><b>·</b> if there is no `id` on the link, the link works as well.
+     * <br/><b>·</b> if a node's `id` appears in the `to` field of two(or more) links, the last link will be used and all the rest links will be ignored.
+     */
+    public static NodeLink2FlatArray(ori: Tree_NodeLink, keyed: 'children'): Tree_FlatArray_CKeyed
+    /**
+     * @description trans tree from `NodeLink` to `FlatArray`.
+     * <br/><b>·</b> if there is no `id` on the node, the node will be ignored.
+     * <br/><b>·</b> if there is no `id` on the link, the link works as well.
+     * <br/><b>·</b> if a node's `id` appears in the `to` of two(or more) links, the last link will be used and all the rest links will be ignored.
+     */
+    public static NodeLink2FlatArray(ori: Tree_NodeLink, keyed: 'parent' | 'children'): Tree_FlatArray_PKeyed | Tree_FlatArray_CKeyed {
+        const can: Tree_FlatArray_PKeyed | Tree_FlatArray_CKeyed = []
+        if(keyed === 'parent') Tree._NodeLink2FlatArray_PKeyed(ori, can)
+        else if(keyed === 'children') Tree._NodeLink2FlatArray_CKeyed(ori, can)
+        return can
     }
     // endregion
 }
@@ -176,15 +253,21 @@ export type Tree_NodeLink_Link = {
 // endregion
 
 
-const ori: Tree_Multilayer = {
-    id: 'n1',
-    name: 'name1',
-    children: [
-        { id: 'n2', children: [] },
-        { id: 'n3', children: [] },  // @ts-ignore
-        { children: [] }
+const ori: Tree_NodeLink = {
+    nodes: [
+        { id: 'n1', name: '1' },
+        { id: 'n2', name: '2' },
+        { id: 'n3', name: '3' },
+        { id: 'n11', name: '11' },
+        { id: 'n22', name: '22' },
+    ],
+    links: [
+        { id: 'l1', from: 'n1', to: 'n2' },
+        { id: 'l11', from: 'n1', to: 'n3' },
+        { id: 'l2', from: 'n11', to: 'n22' }
     ]
 }
 
-let flat = Tree.Multilayer2NodeLink(ori)
+
+let flat = Tree.NodeLink2FlatArray(ori, 'children')
 console.log(flat)
