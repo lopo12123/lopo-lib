@@ -9,7 +9,7 @@ export class Tree {
      * @description parent keyed
      * @private
      */
-    private static _MultilayerObject2FlatArray_PKeyed(ori: Tree_MultilayerObject, keyed: 'parent', container: Tree_FlatArray_PKeyed, pid?: string): void {
+    private static _MultilayerObject2FlatArray_PKeyed(ori: Tree_MultilayerObject, container: Tree_FlatArray_PKeyed, pid?: string): void {
         // store this node`s id
         const _thisId = ori.id ?? UUID()
         // generate this node
@@ -18,21 +18,42 @@ export class Tree {
             id: _thisId,
             extData: ori.extData
         }
-        // set parent`s id
-        if(!!pid) _thisNode.parent = pid
+        // remove the `extData` param if it`s value is `undefined`
+        if(_thisNode.extData === undefined) delete _thisNode.extData
         // delete the `children` param
         delete _thisNode.children
-        // remove the `extData` param if it`s value is `undefined`
-        if(!_thisNode.extData) delete _thisNode.extData
+        // set parent`s id
+        if(!!pid) _thisNode.parent = pid
         // store this node
         container.push(_thisNode)
         // deepen
         ori.children?.forEach((sTree) => {
-            Tree._MultilayerObject2FlatArray_PKeyed(sTree, 'parent', container, _thisId)
+            Tree._MultilayerObject2FlatArray_PKeyed(sTree, container, _thisId)
         })
     }
-    private static _MultilayerObject2FlatArray_CKeyed(ori: Tree_MultilayerObject, keyed: 'children', container: Tree_FlatArray_CKeyed): void {
-
+    private static _MultilayerObject2FlatArray_CKeyed(ori: Tree_MultilayerObject, container: Tree_FlatArray_CKeyed, pid?: string): void {
+        // store this node`s id
+        const _thisId = ori.id ?? UUID()
+        // generate this node
+        const _thisNode: Tree_FlatArray_CKeyed_Node = {
+            ...ori as Omit<Tree_MultilayerObject, 'children'>,
+            id: _thisId,
+            extData: ori.extData
+        }
+        // remove the `extData` param if it`s value is `undefined`
+        if(_thisNode.extData === undefined) delete _thisNode.extData
+        // attach this node`s id into this parent`s `children` param
+        if(!!pid) container.forEach((item, index, arr) => {
+            if(item.id === pid) arr[index].children?.push(_thisId)
+        })
+        // reset the value of key`children`
+        _thisNode.children = []
+        // store this node
+        container.push(_thisNode)
+        // deepen
+        ori.children?.forEach((sTree) => {
+            Tree._MultilayerObject2FlatArray_CKeyed(sTree, container, _thisId)
+        })
     }
     /**
      * @description trans tree from `MultilayerObject` to `FlatArray`.
@@ -43,8 +64,8 @@ export class Tree {
     public static MultilayerObject2FlatArray(ori: Tree_MultilayerObject, keyed: 'parent' | 'children'): Tree_FlatArray_PKeyed | Tree_FlatArray_CKeyed {
         const can: Tree_FlatArray_PKeyed | Tree_FlatArray_CKeyed = []
 
-        if(keyed === 'parent') Tree._MultilayerObject2FlatArray_PKeyed(ori, keyed, can)
-        else if(keyed === 'children') Tree._MultilayerObject2FlatArray_CKeyed(ori, keyed, can)
+        if(keyed === 'parent') Tree._MultilayerObject2FlatArray_PKeyed(ori, can)
+        else if(keyed === 'children') Tree._MultilayerObject2FlatArray_CKeyed(ori, can)
 
         return can
     }
@@ -136,5 +157,5 @@ const ori: Tree_MultilayerObject = {
     ]
 }
 
-let flat = Tree.MultilayerObject2FlatArray(ori, 'parent')
+let flat = Tree.MultilayerObject2FlatArray(ori, 'children')
 console.log(flat)
