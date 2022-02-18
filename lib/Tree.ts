@@ -24,9 +24,9 @@ export class Tree {
         delete _thisNode.children
         // remove the `extData` param if it`s value is `undefined`
         if(!_thisNode.extData) delete _thisNode.extData
-
+        // store this node
         container.push(_thisNode)
-
+        // deepen
         ori.children?.forEach((sTree) => {
             Tree._MultilayerObject2FlatArray_PKeyed(sTree, 'parent', container, _thisId)
         })
