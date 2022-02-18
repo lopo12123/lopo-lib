@@ -73,8 +73,31 @@ export class Tree {
 
     // region Multilayer to NodeLink
     /** Multilayer to NodeLink */
-    private static _Multilayer2NodeLink(ori: Tree_Multilayer, container: Tree_NodeLink): void {
-
+    private static _Multilayer2NodeLink(ori: Tree_Multilayer, container: Tree_NodeLink, pid?: string): void {
+        // store this node`s id
+        const _thisId = ori.id ?? UUID()
+        // generate this node
+        const _thisNode: Tree_NodeLink_Node = {
+            ...ori,
+            id: _thisId,
+            extData: ori.extData
+        }
+        // remove the `extData` param if it`s value is `undefined`
+        if(_thisNode.extData === undefined) delete _thisNode.extData
+        // delete the `children` param
+        delete _thisNode.children
+        // store this node
+        container.nodes.push(_thisNode)
+        // store this link
+        if(!!pid) container.links.push({
+            id: UUID(),
+            from: pid,
+            to: _thisId,
+        })
+        // deepen
+        ori.children?.forEach((sTree) => {
+            Tree._Multilayer2NodeLink(sTree, container, _thisId)
+        })
     }
     /**
      * @description trans tree from `Multilayer` to `NodeLink`.
@@ -146,24 +169,22 @@ export type Tree_NodeLink_Node = {
 }
 /** node-link tree`s link */
 export type Tree_NodeLink_Link = {
-    [k: string]: any
     id: string
     from: string
     to: string
-    extData?: any
 }
 // endregion
 
 
-// const ori: Tree_Multilayer = {
-//     id: 'n1',
-//     name: 'name1',
-//     children: [
-//         { id: 'n2', children: [] },
-//         { id: 'n3', children: [] },  // @ts-ignore
-//         { children: [] }
-//     ]
-// }
-//
-// let flat = Tree.Multilayer2FlatArray(ori, 'children')
-// console.log(flat)
+const ori: Tree_Multilayer = {
+    id: 'n1',
+    name: 'name1',
+    children: [
+        { id: 'n2', children: [] },
+        { id: 'n3', children: [] },  // @ts-ignore
+        { children: [] }
+    ]
+}
+
+let flat = Tree.Multilayer2NodeLink(ori)
+console.log(flat)
