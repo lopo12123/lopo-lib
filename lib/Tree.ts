@@ -1,19 +1,51 @@
+import { v4 as UUID } from "uuid"
+
 /**
  * @description tree operation
  */
 export class Tree {
     // region MultilayerObject to FlatArray
-    private static _MultilayerObject2FlatArray(ori: Tree_MultilayerObject, keyed: 'parent' | 'children'): void {
+    /**
+     * @description parent keyed
+     * @private
+     */
+    private static _MultilayerObject2FlatArray_PKeyed(ori: Tree_MultilayerObject, keyed: 'parent', container: Tree_FlatArray_PKeyed, pid?: string): void {
+        // store this node`s id
+        const _thisId = ori.id ?? UUID()
+        // generate this node
+        const _thisNode: Tree_FlatArray_PKeyed_Node = {
+            ...ori,
+            id: _thisId,
+            extData: ori.extData
+        }
+        // set parent`s id
+        if(!!pid) _thisNode.parent = pid
+        // delete the `children` param
+        delete _thisNode.children
+        // remove the `extData` param if it`s value is `undefined`
+        if(!_thisNode.extData) delete _thisNode.extData
+
+        container.push(_thisNode)
+
+        ori.children?.forEach((sTree) => {
+            Tree._MultilayerObject2FlatArray_PKeyed(sTree, 'parent', container, _thisId)
+        })
+    }
+    private static _MultilayerObject2FlatArray_CKeyed(ori: Tree_MultilayerObject, keyed: 'children', container: Tree_FlatArray_CKeyed): void {
 
     }
     /**
-     * @description trans tree from `MultilayerObject` to `FlatArray`
+     * @description trans tree from `MultilayerObject` to `FlatArray`.
+     * <br/><b>Note:</b> if there is no `id` on the node, it will add an `id` for this node automatically.
      */
     public static MultilayerObject2FlatArray(ori: Tree_MultilayerObject, keyed: 'parent'): Tree_FlatArray_PKeyed
     public static MultilayerObject2FlatArray(ori: Tree_MultilayerObject, keyed: 'children'): Tree_FlatArray_CKeyed
     public static MultilayerObject2FlatArray(ori: Tree_MultilayerObject, keyed: 'parent' | 'children'): Tree_FlatArray_PKeyed | Tree_FlatArray_CKeyed {
         const can: Tree_FlatArray_PKeyed | Tree_FlatArray_CKeyed = []
-        Tree._MultilayerObject2FlatArray(ori, keyed)
+
+        if(keyed === 'parent') Tree._MultilayerObject2FlatArray_PKeyed(ori, keyed, can)
+        else if(keyed === 'children') Tree._MultilayerObject2FlatArray_CKeyed(ori, keyed, can)
+
         return can
     }
     // endregion
@@ -42,18 +74,15 @@ export class Tree {
 }
 
 // type TreeType = 'MultilayerObject' | 'FlatArray' | 'NodeLink'
-// type RelationKey = 'Parent' | 'Children'
-
 // region [type] multilayer-object
 /** multilayer-object tree */
 export type Tree_MultilayerObject = {
     [k: string]: any
     id: string
     extData?: any
-    children: Tree_MultilayerObject[]
+    children?: Tree_MultilayerObject[]
 }
 // endregion
-
 // region [type] flat-array
 /** flat-array (parent keyed) tree */
 export type Tree_FlatArray_PKeyed = Tree_FlatArray_PKeyed_Node[]
@@ -74,7 +103,6 @@ export type Tree_FlatArray_CKeyed_Node = {
     extData?: any
 }
 // endregion
-
 // region [type] node-link
 /** node-link tree */
 export type Tree_NodeLink = {
@@ -96,3 +124,17 @@ export type Tree_NodeLink_Link = {
     extData?: any
 }
 // endregion
+
+
+const ori: Tree_MultilayerObject = {
+    id: 'n1',
+    name: 'name1',
+    children: [
+        { id: 'n2', children: [] },
+        { id: 'n3', children: [] },  // @ts-ignore
+        { children: [] }
+    ]
+}
+
+let flat = Tree.MultilayerObject2FlatArray(ori, 'parent')
+console.log(flat)
