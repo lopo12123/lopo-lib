@@ -113,7 +113,68 @@ export class Tree {
     // endregion
 
     // region NodeLink to Multilayer
+    /** NodeLink to Multilayer */
+    private static _NodeLink2Multilayer(nodes: Tree_NodeLink_Node[], links: Tree_NodeLink_Link[], root: Tree_Multilayer) {
+        // search all the links whose `from` equals `root.id`
+        links.forEach((link) => {
+            if(link.from === root.id) {
+                // find the node on the other side
+                nodes.forEach((node) => {
+                    if(node.id === link.to) {
+                        // set `children` if undefined
+                        if(!root.children) root.children = []
+                        // push the child root and deepen on it
+                        const sRoot: Tree_Multilayer = {
+                            ...node,
+                            extData: node.extData
+                        }
+                        Tree._NodeLink2Multilayer(nodes, links, sRoot)
+                        root.children.push(sRoot)
+                    }
+                })
+            }
+        })
+    }
+    /**
+     * @description trans tree from `NodeLink` to `Multilayer`
+     * <br/><b>·</b> it will try to find a node that is not pointed to by the `to` of any of the `ori.links` as the root node, and build the tree on this node.
+     * <br/><b>·</b> if there are multiple nodes that meet the conditions in `ori.nodes`, it will only take the first one as the root node and start building the tree directly, the rest of the nodes will be ignored.
+     * <br/><b>·</b> if there are some nodes in `ori.nodes` that are not connected to other nodes, these nodes will be ignored.
+     */
+    public static NodeLink2Multilayer(ori: Tree_NodeLink) {
+        // get nodes and links
+        const { nodes, links } = ori
+        // do filter job (filter out single nodes and links)
+        const filteredNodes = nodes.filter((node) => {
+            const ifLinked = links.find((link) => {
+                return (link.from === node.id) || (link.to === node.id)
+            })
+            return Boolean(ifLinked)
+        })
+        const filteredLinks = links.filter((link) => {
+            const ifNoded = nodes.find((node) => {
+                return (link.from === node.id) || (link.to === node.id)
+            })
+        })
+        // find the root of the tree
+        const rootNode = filteredNodes.find((node) => {
+            const ifPointed = filteredLinks.find((link) => {
+                return link.to === node.id
+            })
+            return Boolean(!ifPointed)
+        })
+        // return if there has no root node
+        if(!rootNode) return null
+        // generate the root of tree
+        const treeRoot: Tree_Multilayer = {
+            ...rootNode,
+            extData: rootNode.extData
+        }
+        // build the tree
+        Tree._NodeLink2Multilayer(nodes, links, treeRoot)
 
+        return treeRoot
+    }
     // endregion
 
     // region FlatArray to NodeLink
@@ -258,16 +319,17 @@ const ori: Tree_NodeLink = {
         { id: 'n1', name: '1' },
         { id: 'n2', name: '2' },
         { id: 'n3', name: '3' },
-        { id: 'n11', name: '11' },
-        { id: 'n22', name: '22' },
+        { id: 'n4', name: '4' },
+        { id: 'n5', name: '5' },
     ],
     links: [
         { id: 'l1', from: 'n1', to: 'n2' },
-        { id: 'l11', from: 'n1', to: 'n3' },
-        { id: 'l2', from: 'n11', to: 'n22' }
+        { id: 'l2', from: 'n1', to: 'n3' },
+        { id: 'l3', from: 'n1', to: 'n4' },
+        { id: 'l4', from: 'n2', to: 'n5' }
     ]
 }
 
 
-let flat = Tree.NodeLink2FlatArray(ori, 'children')
-console.log(flat)
+let flat = Tree.NodeLink2Multilayer(ori)
+console.log(JSON.stringify(flat, null, 4))
