@@ -72,7 +72,43 @@ export class Tree {
     // endregion
 
     // region FlatArray to Multilayer
+    /** FlatArray to Multilayer (with parent keyed) */
+    private static _FlatArray2Multilayer_PKeyed(ori: Tree_FlatArray_PKeyed) {
 
+        return {} as Tree_Multilayer
+    }
+    /** FlatArray to Multilayer (with children keyed) */
+    private static _FlatArray2Multilayer_CKeyed(ori: Tree_FlatArray_CKeyed, root?: Tree_Multilayer) {
+
+        if(!root) {
+            // find the root of the tree
+            const rootNode = (ori as Tree_FlatArray_CKeyed).find((_rootNode) => {
+                const ifChild = ori.find((_node) => {
+                    return !!_node.children && _node.children.includes(_rootNode.id)
+                })
+                return !ifChild
+            })
+            // generate this node
+            root = {  // todo here
+                ...rootNode,
+                extData: rootNode.extData
+            }
+        }
+
+        return {} as Tree_Multilayer
+    }
+    public static FlatArray2Multilayer(ori: Tree_FlatArray_PKeyed, keyed: 'parent'): Tree_Multilayer
+    public static FlatArray2Multilayer(ori: Tree_FlatArray_CKeyed, keyed: 'children'): Tree_Multilayer
+    /**
+     * @description trans tree from `FlatArray` to `Multilayer`.
+     * <br/><b>·</b> it will try to find a node with no `parent` field (or `parent` with value `null` or `undefined`) as the root node, and build the tree on this node.
+     * <br/><b>·</b> if there are multiple nodes that meet the conditions in `ori`, it will only take the first one as the root node and start building the tree directly, the rest of the nodes will be ignored.
+     */
+    public static FlatArray2Multilayer(ori: Tree_FlatArray_PKeyed | Tree_FlatArray_CKeyed, keyed: 'parent' | 'children'): Tree_Multilayer | null {
+        if(keyed === 'parent') return Tree._FlatArray2Multilayer_PKeyed(ori)
+        else if(keyed === 'children') return Tree._FlatArray2Multilayer_CKeyed(ori)
+        else return null
+    }
     // endregion
 
     // region Multilayer to NodeLink
@@ -280,8 +316,8 @@ export type Tree_FlatArray_PKeyed = Tree_FlatArray_PKeyed_Node[]
 export type Tree_FlatArray_PKeyed_Node = {
     [k: string]: any
     id: string
-    parent?: string
     extData?: any
+    parent?: string
 }
 /** flat-array (children keyed) tree */
 export type Tree_FlatArray_CKeyed = Tree_FlatArray_CKeyed_Node[]
@@ -289,8 +325,8 @@ export type Tree_FlatArray_CKeyed = Tree_FlatArray_CKeyed_Node[]
 export type Tree_FlatArray_CKeyed_Node = {
     [k: string]: any
     id: string
-    children?: string[]
     extData?: any
+    children?: string[]
 }
 // endregion
 // region [type] node-link
@@ -314,22 +350,13 @@ export type Tree_NodeLink_Link = {
 // endregion
 
 
-const ori: Tree_NodeLink = {
-    nodes: [
-        { id: 'n1', name: '1' },
-        { id: 'n2', name: '2' },
-        { id: 'n3', name: '3' },
-        { id: 'n4', name: '4' },
-        { id: 'n5', name: '5' },
-    ],
-    links: [
-        { id: 'l1', from: 'n1', to: 'n2' },
-        { id: 'l2', from: 'n1', to: 'n3' },
-        { id: 'l3', from: 'n1', to: 'n4' },
-        { id: 'l4', from: 'n2', to: 'n5' }
-    ]
-}
+const ori: Tree_FlatArray_CKeyed = [
+    { id: 'n2', name: 'n2', children: ['n4'] },
+    { id: 'n3', name: 'n3' },
+    { id: 'n4', name: 'n4' },
+    { id: 'n1', name: 'n1', children: ['n2', 'n3'] },
+]
 
 
-let flat = Tree.NodeLink2Multilayer(ori)
+let flat = Tree.FlatArray2Multilayer(ori, 'children')
 console.log(JSON.stringify(flat, null, 4))
