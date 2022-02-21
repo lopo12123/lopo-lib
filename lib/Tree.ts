@@ -35,7 +35,7 @@ export class Tree {
         return resultTree
     }
     /**
-     * @description [Tree_FlatArray] trans from `child-keyed` to `parent-keyed`
+     * @description [Tree_FlatArray] trans from `children-keyed` to `parent-keyed`
      */
     public static TransKeyed_C2P(ori: Tree_FlatArray_CKeyed): Tree_FlatArray_PKeyed {
         // result tree array
@@ -135,7 +135,7 @@ export class Tree {
     // endregion
 
     // region FlatArray to Multilayer
-    /** FlatArray to Multilayer (with parent keyed) */
+    /** FlatArray (with parent keyed) to Multilayer */
     private static _FlatArray2Multilayer_PKeyed(ori: Tree_FlatArray_PKeyed, root?: Tree_Multilayer) {
         if(!root) {
             // find the root of the tree
@@ -197,7 +197,7 @@ export class Tree {
             return root
         }
     }
-    /** FlatArray to Multilayer (with children keyed) */
+    /** FlatArray (with children keyed) to Multilayer */
     private static _FlatArray2Multilayer_CKeyed(ori: Tree_FlatArray_CKeyed, root?: Tree_Multilayer, childIds?: string[]) {
         if(!root) {
             // find the root of the tree
@@ -343,6 +343,7 @@ export class Tree {
             const ifNoded = nodes.find((node) => {
                 return (link.from === node.id) || (link.to === node.id)
             })
+            return Boolean(ifNoded)
         })
         // find the root of the tree
         const rootNode = filteredNodes.find((node) => {
@@ -366,7 +367,69 @@ export class Tree {
     // endregion
 
     // region FlatArray to NodeLink
+    /** FlatArray (with parent keyed) to NodeLink */
+    private static _FlatArray2NodeLink_PKeyed(ori: Tree_FlatArray_PKeyed, container: Tree_NodeLink) {
+        // solve every node in `ori`
+        ori.forEach((node) => {
+            // generate the new node
+            const newNode: Tree_NodeLink_Node = {
+                ...node,
+                extData: node.extData
+            }
+            // delete the origin param `parent`
+            delete newNode.parent
+            // add node
+            container.nodes.push(newNode)
+            // add link(s)
+            ori.forEach((_others) => {
+                if(_others.parent === node.id) {
+                    container.links.push({
+                        id: UUID(),
+                        from: node.id,
+                        to: _others.id
+                    })
+                }
+            })
+        })
+    }
+    /** FlatArray (with children keyed) to NodeLink */
+    private static _FlatArray2NodeLink_CKeyed(ori: Tree_FlatArray_CKeyed, container: Tree_NodeLink) {
+        // solve every node in `ori`
+        ori.forEach((node) => {
+            // generate the new node
+            const newNode: Tree_NodeLink_Node = {
+                ...node,
+                extData: node.extData
+            }
+            // delete the origin param `children`
+            delete newNode.children
+            // add node
+            container.nodes.push(newNode)
+            // add link(s)
+            ori.forEach((_others) => {
+                if(_others.children.includes(node.id)) {
+                    container.links.push({
+                        id: UUID(),
+                        from: _others.id,
+                        to: node.id
+                    })
+                }
+            })
+        })
+    }
+    public static FlatArray2NodeLink(ori: Tree_FlatArray_PKeyed, keyed: 'parent'): Tree_NodeLink
+    public static FlatArray2NodeLink(ori: Tree_FlatArray_CKeyed, keyed: 'children'): Tree_NodeLink
+    /**
+     * @description trans from `FlatArray` to `NodeLink`
+     */
+    public static FlatArray2NodeLink(ori: Tree_FlatArray_PKeyed | Tree_FlatArray_CKeyed, keyed: 'parent' | 'children'): Tree_NodeLink | null {
+        const can: Tree_NodeLink = { nodes: [], links: [] }
 
+        if(keyed === 'parent') Tree._FlatArray2NodeLink_PKeyed(ori, can)
+        else if(keyed === 'children') Tree._FlatArray2NodeLink_CKeyed(ori, can)
+
+        return can
+    }
     // endregion
 
     // region NodeLink to FlatArray
@@ -500,25 +563,3 @@ export type Tree_NodeLink_Link = {
     to: string
 }
 // endregion
-
-
-const ori1: Tree_FlatArray_PKeyed = [
-    { id: 'n1', name: 'n1' },
-    { id: 'n2', name: 'n2', parent: 'n1' },
-    { id: 'n3', name: 'n3', parent: 'n1' },
-    { id: 'n4', name: 'n4', parent: 'n2' },
-]
-const ori2: Tree_FlatArray_CKeyed = [
-    { id: 'n2', name: 'n2', children: ['n4'] },
-    { id: 'n3', name: 'n3' },
-    { id: 'n4', name: 'n4' },
-    { id: 'n1', name: 'n1', children: ['n2', 'n3'] },
-]
-
-
-// let flat = Tree.TransKeyed_P2C(ori1)
-// let flat = Tree.TransKeyed_C2P(ori2)
-// let flat = Tree.FlatArray2Multilayer(ori2, 'children')
-let flat = Tree.FlatArray2Multilayer(ori1, 'parent')
-
-console.log(JSON.stringify(flat, null, 4))
