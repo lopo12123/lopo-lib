@@ -1,32 +1,35 @@
 {
-  "name": "lopo-lib",
-  "version": "2.0.1",
-  "description": "some commonly used functions",
-  "main": "./dist/index.js",
-  "scripts": {
-    "build": "tsc && echo done"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lopo12123/lopo-lib.git"
-  },
-  "keywords": [
-    "lopo",
-    "commonly-used-function",
-    "search",
-    "tree flatten"
-  ],
-  "author": "lopo",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/lopo12123/lopo-lib/issues"
-  },
-  "homepage": "https://github.com/lopo12123/lopo-lib#readme",
-  "dependencies": {
-    "uuid": "^8.3.2"
-  },
-  "devDependencies": {
-    "@types/node": "^14.17.5",
-    "@types/uuid": "^8.3.4"
-  }
+    "name": "lopo-lib",
+    "version": "2.0.1",
+    "description": "some commonly used functions",
+    "main": "./dist/index.js",
+    "scripts": {
+        "build": "tsc && echo done"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lopo12123/lopo-lib.git"
+    },
+    "keywords": [
+        "lopo",
+        "commonly-used-function",
+        "search",
+        "tree flatten"
+    ],
+    "author": "lopo",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/lopo12123/lopo-lib/issues"
+    },
+    "homepage": "https://github.com/lopo12123/lopo-lib#readme",
+    "files": [
+        "./dist", "./lib"
+    ],
+    "dependencies": {
+        "uuid": "^8.3.2"
+    },
+    "devDependencies": {
+        "@types/node": "^14.17.5",
+        "@types/uuid": "^8.3.4"
+    }
 }
