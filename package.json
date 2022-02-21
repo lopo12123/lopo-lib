@@ -2,9 +2,9 @@
   "name": "lopo-lib",
   "version": "2.0.1",
   "description": "some commonly used functions",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc && echo done"
   },
   "repository": {
     "type": "git",
