@@ -4,6 +4,69 @@ import { v4 as UUID } from "uuid"
  * @description tree operation
  */
 export class Tree {
+    // region FlatArray
+    /**
+     * @description [Tree_FlatArray] trans from `parent-keyed` to `child-keyed`
+     */
+    public static TransKeyed_P2C(ori: Tree_FlatArray_PKeyed): Tree_FlatArray_CKeyed {
+        // result tree array
+        const resultTree: Tree_FlatArray_CKeyed = []
+        // solve all the nodes in `ori`
+        ori.forEach((node) => {
+            // generate the new node
+            const newNode: Tree_FlatArray_CKeyed_Node = {
+                ...node,
+                children: [],
+                extData: node.extData
+            }
+            // delete the extra param
+            delete newNode.parent
+            // find all child nodes in `ori`
+            ori.forEach((_child) => {
+                if(node.id === _child.parent) {
+                    newNode.children!.push(_child.id)
+                }
+            })
+            // delete the `children` param if it is empty
+            if(newNode.children && newNode.children.length === 0) delete newNode.children
+            // add the new node to the resultTree
+            resultTree.push(newNode)
+        })
+        return resultTree
+    }
+    /**
+     * @description [Tree_FlatArray] trans from `child-keyed` to `parent-keyed`
+     */
+    public static TransKeyed_C2P(ori: Tree_FlatArray_CKeyed): Tree_FlatArray_PKeyed {
+        // result tree array
+        const resultTree: Tree_FlatArray_PKeyed = []
+        // solve all the nodes in `ori`
+        ori.forEach((node) => {
+            // generate the new node
+            const newNode: Tree_FlatArray_PKeyed_Node = {
+                ...node,
+                parent: '',
+                extData: node.extData
+            }
+            // delete the extra param
+            delete newNode.children
+            // find all child nodes in `ori`
+            ori.forEach((_parent) => {
+                if(_parent.children && _parent.children.includes(node.id)) {
+                    newNode.parent = _parent.id
+                }
+            })
+            // delete the `parent` param if it is empty
+            if((newNode.parent!== undefined) && (newNode.parent === '')) {
+                delete newNode.parent
+            }
+            // add the new node to the resultTree
+            resultTree.push(newNode)
+        })
+        return resultTree
+    }
+    // endregion
+
     // region Multilayer to FlatArray
     /** Multilayer to FlatArray (with parent keyed) */
     private static _Multilayer2FlatArray_PKeyed(ori: Tree_Multilayer, container: Tree_FlatArray_PKeyed, pid?: string): void {
@@ -78,8 +141,7 @@ export class Tree {
         return {} as Tree_Multilayer
     }
     /** FlatArray to Multilayer (with children keyed) */
-    private static _FlatArray2Multilayer_CKeyed(ori: Tree_FlatArray_CKeyed, root?: Tree_Multilayer) {
-
+    private static _FlatArray2Multilayer_CKeyed(ori: Tree_FlatArray_CKeyed, root?: Tree_Multilayer, childIds?: string[]) {
         if(!root) {
             // find the root of the tree
             const rootNode = (ori as Tree_FlatArray_CKeyed).find((_rootNode) => {
@@ -88,14 +150,47 @@ export class Tree {
                 })
                 return !ifChild
             })
+            // if there is no node can be `root`, return `null` directly
+            if(!rootNode) return null
             // generate this node
-            root = {  // todo here
-                ...rootNode,
+            root = {
+                ...rootNode as Omit<Tree_FlatArray_CKeyed_Node, 'children'>,
+                id: rootNode.id,
+                children: [],
                 extData: rootNode.extData
             }
+            // attach its branches
+            Tree._FlatArray2Multilayer_CKeyed(ori, root, rootNode.children)
+            // delete the `children` param if it is empty
+            if(root.children && root.children.length === 0) delete root.children
+            return root
         }
-
-        return {} as Tree_Multilayer
+        else {
+            if(!!childIds && childIds.length > 0) {
+                // reset the `children` param
+                root.children = []
+                // query every branch
+                childIds.forEach((childId) => {
+                    // query this branch
+                    const _branchNode = ori.find((node) => {
+                        return childId === node.id
+                    })
+                    // if the branch node exist
+                    if(!!_branchNode) {
+                        const _branch: Tree_Multilayer = {
+                            ..._branchNode,
+                            children: [],
+                            extData: _branchNode.extData
+                        }
+                        Tree._FlatArray2Multilayer_CKeyed(ori, _branch, _branchNode.children)
+                        root!.children!.push(_branch)
+                    }
+                })
+                if(root.children.length === 0) delete root.children
+            }
+            // directly return the root if it has no child
+            return root
+        }
     }
     public static FlatArray2Multilayer(ori: Tree_FlatArray_PKeyed, keyed: 'parent'): Tree_Multilayer
     public static FlatArray2Multilayer(ori: Tree_FlatArray_CKeyed, keyed: 'children'): Tree_Multilayer
@@ -350,7 +445,13 @@ export type Tree_NodeLink_Link = {
 // endregion
 
 
-const ori: Tree_FlatArray_CKeyed = [
+const ori1: Tree_FlatArray_PKeyed = [
+    { id: 'n1', name: 'n1' },
+    { id: 'n2', name: 'n2', parent: 'n1' },
+    { id: 'n3', name: 'n3', parent: 'n1' },
+    { id: 'n4', name: 'n4', parent: 'n2' },
+]
+const ori2: Tree_FlatArray_CKeyed = [
     { id: 'n2', name: 'n2', children: ['n4'] },
     { id: 'n3', name: 'n3' },
     { id: 'n4', name: 'n4' },
@@ -358,5 +459,8 @@ const ori: Tree_FlatArray_CKeyed = [
 ]
 
 
-let flat = Tree.FlatArray2Multilayer(ori, 'children')
+// let flat = Tree.TransKeyed_P2C(ori1)
+let flat = Tree.TransKeyed_C2P(ori2)
+// let flat = Tree.FlatArray2Multilayer(ori2, 'children')
+
 console.log(JSON.stringify(flat, null, 4))
