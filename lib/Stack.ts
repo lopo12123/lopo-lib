@@ -1,7 +1,7 @@
 /**
  * @description LIFO
  */
-export class Stack<T> {
+export default class Stack<T> {
     /**
      * @description max length (unlimited if `_max === -1`)
      * @private

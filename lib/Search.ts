@@ -1,4 +1,4 @@
-export abstract class Search {
+export default class Search {
     private static _dfs<BranchNode extends {[k: string]: any}>(
         branchRoot: BranchNode,
         condition: (node: BranchNode) => boolean,

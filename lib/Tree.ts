@@ -3,7 +3,7 @@ import { v4 as UUID } from "uuid"
 /**
  * @description tree operation
  */
-export class Tree {
+export default class Tree {
     // region FlatArray
     /**
      * @description [Tree_FlatArray] trans from `parent-keyed` to `child-keyed`
