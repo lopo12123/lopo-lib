@@ -1,7 +1,7 @@
 /**
  * @description FIFO
  */
-export default class Queue<T> {
+export class Queue<T> {
     /**
      * @description max length
      * @private

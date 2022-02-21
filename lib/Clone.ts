@@ -1,7 +1,7 @@
 /**
  * @description clone an object、array or anything else
  */
-export default class Clone {
+export class Clone {
     /**
      * @description [plain] these wil be lost:
      * <br/>[1]methods on objects;

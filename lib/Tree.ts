@@ -3,7 +3,7 @@ import { v4 as UUID } from "uuid"
 /**
  * @description tree operation
  */
-export default class Tree {
+export class Tree {
     // region FlatArray
     /**
      * @description [Tree_FlatArray] trans from `parent-keyed` to `child-keyed`
@@ -112,15 +112,7 @@ export default class Tree {
             Tree._Multilayer2FlatArray_CKeyed(sTree, container, _thisId)
         })
     }
-    /**
-     * @description trans tree from `Multilayer` to `FlatArray`.
-     * <br/><b>·</b> if there is no `id` on the node, it will add an `id` for this node automatically.
-     */
     public static Multilayer2FlatArray(ori: Tree_Multilayer, keyed: 'parent'): Tree_FlatArray_PKeyed
-    /**
-     * @description trans tree from `Multilayer` to `FlatArray`.
-     * <br/><b>·</b> if there is no `id` on the node, it will add an `id` for this node automatically.
-     */
     public static Multilayer2FlatArray(ori: Tree_Multilayer, keyed: 'children'): Tree_FlatArray_CKeyed
     /**
      * @description trans tree from `Multilayer` to `FlatArray`.
@@ -329,7 +321,7 @@ export default class Tree {
      * <br/><b>·</b> if there are multiple nodes that meet the conditions in `ori.nodes`, it will only take the first one as the root node and start building the tree directly, the rest of the nodes will be ignored.
      * <br/><b>·</b> if there are some nodes in `ori.nodes` that are not connected to other nodes, these nodes will be ignored.
      */
-    public static NodeLink2Multilayer(ori: Tree_NodeLink) {
+    public static NodeLink2Multilayer(ori: Tree_NodeLink): Tree_Multilayer | null {
         // get nodes and links
         const { nodes, links } = ori
         // do filter job (filter out single nodes and links)
@@ -485,19 +477,7 @@ export default class Tree {
             container.push(_thisNode)
         })
     }
-    /**
-     * @description trans tree from `NodeLink` to `FlatArray`.
-     * <br/><b>·</b> if there is no `id` on the node, the node will be ignored.
-     * <br/><b>·</b> if there is no `id` on the link, the link works as well.
-     * <br/><b>·</b> if a node's `id` appears in the `to` field of two(or more) links, the last link will be used and all the rest links will be ignored.
-     */
     public static NodeLink2FlatArray(ori: Tree_NodeLink, keyed: 'parent'): Tree_FlatArray_PKeyed
-    /**
-     * @description trans tree from `NodeLink` to `FlatArray`.
-     * <br/><b>·</b> if there is no `id` on the node, the node will be ignored.
-     * <br/><b>·</b> if there is no `id` on the link, the link works as well.
-     * <br/><b>·</b> if a node's `id` appears in the `to` field of two(or more) links, the last link will be used and all the rest links will be ignored.
-     */
     public static NodeLink2FlatArray(ori: Tree_NodeLink, keyed: 'children'): Tree_FlatArray_CKeyed
     /**
      * @description trans tree from `NodeLink` to `FlatArray`.
