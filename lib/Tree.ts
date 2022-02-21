@@ -136,9 +136,66 @@ export class Tree {
 
     // region FlatArray to Multilayer
     /** FlatArray to Multilayer (with parent keyed) */
-    private static _FlatArray2Multilayer_PKeyed(ori: Tree_FlatArray_PKeyed) {
-
-        return {} as Tree_Multilayer
+    private static _FlatArray2Multilayer_PKeyed(ori: Tree_FlatArray_PKeyed, root?: Tree_Multilayer) {
+        if(!root) {
+            // find the root of the tree
+            const rootNode = (ori as Tree_FlatArray_CKeyed).find((_rootNode) => {
+                const ifChild = ori.find((_node) => {
+                    return !!_node.children && _node.children.includes(_rootNode.id)
+                })
+                return !ifChild
+            })
+            // if there is no node can be `root`, return `null` directly
+            if(!rootNode) return null
+            // generate this node
+            root = {
+                ...rootNode as Omit<Tree_FlatArray_PKeyed_Node, 'parent'>,
+                id: rootNode.id,
+                children: [],
+                extData: rootNode.extData
+            }
+            // build its branches
+            ori.forEach((node) => {
+                if(node.parent === root!.id) {
+                    // generate this branch
+                    const _branch: Tree_Multilayer = {
+                        ...node,
+                        children: [],
+                        extData: node.extData
+                    }
+                    // delete the origin node`s `parent` param
+                    delete _branch.parent
+                    // build this branch
+                    Tree._FlatArray2Multilayer_PKeyed(ori, _branch)
+                    // attach this branch
+                    root!.children!.push(_branch)
+                }
+            })
+            // delete the `children` param if it is empty
+            if(root.children && root.children.length === 0) delete root.children
+            return root
+        }
+        else {
+            ori.forEach((node) => {
+                // generate this branch
+                if(node.parent === root!.id) {
+                    const _branch: Tree_Multilayer = {
+                        ...node,
+                        children: [],
+                        extData: node.extData
+                    }
+                    // delete the origin node`s `parent` param
+                    delete _branch.parent
+                    // build this branch
+                    Tree._FlatArray2Multilayer_PKeyed(ori, _branch)
+                    // attach this branch
+                    root!.children!.push(_branch)
+                }
+            })
+            // delete the `children` param if it is empty
+            if(root.children && root.children.length === 0) delete root.children
+            return root
+        }
     }
     /** FlatArray to Multilayer (with children keyed) */
     private static _FlatArray2Multilayer_CKeyed(ori: Tree_FlatArray_CKeyed, root?: Tree_Multilayer, childIds?: string[]) {
@@ -460,7 +517,8 @@ const ori2: Tree_FlatArray_CKeyed = [
 
 
 // let flat = Tree.TransKeyed_P2C(ori1)
-let flat = Tree.TransKeyed_C2P(ori2)
+// let flat = Tree.TransKeyed_C2P(ori2)
 // let flat = Tree.FlatArray2Multilayer(ori2, 'children')
+let flat = Tree.FlatArray2Multilayer(ori1, 'parent')
 
 console.log(JSON.stringify(flat, null, 4))
