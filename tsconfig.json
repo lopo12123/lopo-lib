@@ -76,7 +76,7 @@
         "forceConsistentCasingInFileNames": true
         /* Disallow inconsistently-cased references to the same file. */
     },
-    "files": [
-        "./lib/Queue.ts"
+    "include": [
+        "./lib/*.ts"
     ]
 }
