@@ -407,7 +407,7 @@ export class Tree {
             container.nodes.push(newNode)
             // add link(s)
             ori.forEach((_others) => {
-                if(_others.children.includes(node.id)) {
+                if(_others.children && _others.children.includes(node.id)) {
                     container.links.push({
                         id: UUID(),
                         from: _others.id,
