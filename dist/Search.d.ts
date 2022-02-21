@@ -1,4 +1,4 @@
-export declare abstract class Search {
+export declare class Search {
     private static _dfs;
     /**
      * @description depth first search

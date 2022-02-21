@@ -14,15 +14,7 @@ export declare class Tree {
     private static _Multilayer2FlatArray_PKeyed;
     /** Multilayer to FlatArray (with children keyed) */
     private static _Multilayer2FlatArray_CKeyed;
-    /**
-     * @description trans tree from `Multilayer` to `FlatArray`.
-     * <br/><b>·</b> if there is no `id` on the node, it will add an `id` for this node automatically.
-     */
     static Multilayer2FlatArray(ori: Tree_Multilayer, keyed: 'parent'): Tree_FlatArray_PKeyed;
-    /**
-     * @description trans tree from `Multilayer` to `FlatArray`.
-     * <br/><b>·</b> if there is no `id` on the node, it will add an `id` for this node automatically.
-     */
     static Multilayer2FlatArray(ori: Tree_Multilayer, keyed: 'children'): Tree_FlatArray_CKeyed;
     /** FlatArray (with parent keyed) to Multilayer */
     private static _FlatArray2Multilayer_PKeyed;
@@ -56,19 +48,7 @@ export declare class Tree {
     private static _NodeLink2FlatArray_PKeyed;
     /** NodeLink to FlatArray (with children keyed) */
     private static _NodeLink2FlatArray_CKeyed;
-    /**
-     * @description trans tree from `NodeLink` to `FlatArray`.
-     * <br/><b>·</b> if there is no `id` on the node, the node will be ignored.
-     * <br/><b>·</b> if there is no `id` on the link, the link works as well.
-     * <br/><b>·</b> if a node's `id` appears in the `to` field of two(or more) links, the last link will be used and all the rest links will be ignored.
-     */
     static NodeLink2FlatArray(ori: Tree_NodeLink, keyed: 'parent'): Tree_FlatArray_PKeyed;
-    /**
-     * @description trans tree from `NodeLink` to `FlatArray`.
-     * <br/><b>·</b> if there is no `id` on the node, the node will be ignored.
-     * <br/><b>·</b> if there is no `id` on the link, the link works as well.
-     * <br/><b>·</b> if a node's `id` appears in the `to` field of two(or more) links, the last link will be used and all the rest links will be ignored.
-     */
     static NodeLink2FlatArray(ori: Tree_NodeLink, keyed: 'children'): Tree_FlatArray_CKeyed;
 }
 /** multilayer tree */
