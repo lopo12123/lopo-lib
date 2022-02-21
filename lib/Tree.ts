@@ -89,7 +89,7 @@ export class Tree {
             Tree._Multilayer2FlatArray_PKeyed(sTree, container, _thisId)
         })
     }
-    /** Multilayer to FlatArray (with parent keyed) */
+    /** Multilayer to FlatArray (with children keyed) */
     private static _Multilayer2FlatArray_CKeyed(ori: Tree_Multilayer, container: Tree_FlatArray_CKeyed, pid?: string): void {
         // store this node`s id
         const _thisId = ori.id ?? UUID()
