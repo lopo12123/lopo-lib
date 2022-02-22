@@ -1,22 +1,21 @@
 import {createWebHashHistory, RouteRecordRaw, RouterOptions} from "vue-router";
 
-import Index from "@/views/Index.vue"
+import Root from "@/views/Root.vue";
 
 const routes: RouteRecordRaw[] = [
     {
         path: '/',
-        redirect: {
-            name: 'Index'
-        }
-    },
-    {
-        path: '/index',
-        name: 'Index',
-        component: Index,
+        name: 'Root',
+        component: Root,
         children: [
-
+            { path: '', redirect: { name: 'Docs' } },
+            {
+                path: 'docs',
+                name: 'Docs',
+                component: () => import("@/views/Docs.vue")
+            }
         ]
-    }
+    },
 ]
 
 export const router: RouterOptions = {
