@@ -2,7 +2,10 @@
     <div class="root">
         <div class="root-nav-bar">
             <div class="root-logo-container">
-                <img src="" alt="">
+<!--                <img src="" alt="">-->
+                <i class="label-method" />
+                <i class="label-public" />
+                <i class="label-private" />
             </div>
             <div class="root-operate-container">
                 <i class="iconfont icon-github" title="Go to GitHub" @click="jumpTo('github')" />
