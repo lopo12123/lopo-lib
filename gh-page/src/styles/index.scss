@@ -16,6 +16,9 @@ img {
 }
 
 // region 菜单上的图标
+.label-public { @extend .iconfont, .icon-unlock; color: #79bd12; }
+.label-private { @extend .iconfont, .icon-lock; color: #aaaaaa; }
+
 @mixin menu-label-base($content: "", $bg: #000000, $color: #ffffff) {
     position: relative;
     width: 24px;
@@ -37,13 +40,9 @@ img {
         justify-content: center;
     }
 }
-
-.label-public { @extend .iconfont, .icon-unlock; color: #79bd12; }
-.label-private { @extend .iconfont, .icon-lock; color: #aaaaaa; }
-
 .label-class { @include menu-label-base("c", #2791ff); }
 .label-field { @include menu-label-base("f", #f56c6c); }
-.label-member { @include menu-label-base("m", plum); }
-.label-method { @include menu-label-base("m"); }
+.label-member { @include menu-label-base("m", #dda0dd); }
+.label-method { @include menu-label-base("m", #888888); }
 .label-parameter { @include menu-label-base('p')}
 // endregion
