@@ -1,5 +1,7 @@
 @import "./iconfont.scss";
+@import "./mixin.scss";
 
+// region [normal settings]
 * {
     margin: 0;
     padding: 0;
@@ -14,8 +16,15 @@ html, body, #app {
 img {
     -webkit-user-drag: none!important;
 }
+// endregion
 
-// region 菜单上的图标
+// region [codemirror]
+.cm-scroller {
+    @include scrollBarStyle(#cccccc80);
+}
+// endregion
+
+// region [icons in menu]
 .label-public { @extend .iconfont, .icon-unlock; margin-right: 5px; color: #79bd12!important; }
 .label-private { @extend .iconfont, .icon-lock; margin-right: 5px; color: #f56c6c!important; }
 .label-static { @extend .iconfont, .icon-affix; margin-right: 5px; color: #dda0dd!important;}
