@@ -16,14 +16,15 @@ img {
 }
 
 // region 菜单上的图标
-.label-public { @extend .iconfont, .icon-unlock; color: #79bd12!important; }
-.label-private { @extend .iconfont, .icon-lock; color: #f56c6c!important; }
+.label-public { @extend .iconfont, .icon-unlock; margin-right: 5px; color: #79bd12!important; }
+.label-private { @extend .iconfont, .icon-lock; margin-right: 5px; color: #f56c6c!important; }
+.label-static { @extend .iconfont, .icon-affix; margin-right: 5px; color: #dda0dd!important;}
 
 @mixin menu-label-base($content: "", $bg: #000000, $color: #ffffff) {
     position: relative;
     width: 20px;
     height: 20px;
-    margin: 0 5px;
+    margin-right: 5px;
     display: inline-block;
     &::before {
         content: $content;
@@ -41,7 +42,7 @@ img {
     }
 }
 .label-class { @include menu-label-base("c", #2791ff); }
-.label-constructor { @include menu-label-base("~", #dda0dd); }
+.label-constructor { @include menu-label-base("~", #ffc0cb); }
 .label-parameter { @include menu-label-base("p", #f6bd38); }
 .label-method { @include menu-label-base("m", #888888); }
 // endregion
