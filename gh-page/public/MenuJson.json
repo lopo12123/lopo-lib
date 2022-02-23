@@ -16,7 +16,63 @@
         }
     },
     "queue": {
-
+        "constructor": {
+            "type": "constructor",
+            "static": false,
+            "permission": "public",
+            "description": "description here",
+            "declare": "new Queue<T>(max: number)"
+        },
+        "length": {
+            "type": "parameter",
+            "static": false,
+            "permission": "public",
+            "description": "description here",
+            "declare": "const length: number = new Queue<string>(5).length",
+            "example": "example 1"
+        },
+        "create": {
+            "type": "method",
+            "static": true,
+            "permission": "public",
+            "description": "description here",
+            "declare": "Queue.create<T>(max: T): Queue<T>"
+        },
+        "getQueue": {
+            "type": "method",
+            "static": false,
+            "permission": "public",
+            "description": "description here",
+            "declare": "getQueue(): T[]"
+        },
+        "in": {
+            "type": "method",
+            "static": false,
+            "permission": "public",
+            "description": "description here",
+            "declare": "in(...items: T[]): number"
+        },
+        "out": {
+            "type": "method",
+            "static": false,
+            "permission": "public",
+            "description": "description here",
+            "declare": "out(n: number): T[]"
+        },
+        "circle": {
+            "type": "method",
+            "static": false,
+            "permission": "public",
+            "description": "description here",
+            "declare": "circle(n: number, reverse: boolean = false): void"
+        },
+        "clear": {
+            "type": "method",
+            "static": false,
+            "permission": "public",
+            "description": "description here",
+            "declare": "clear(n?: number): void"
+        }
     },
     "search": {
 
