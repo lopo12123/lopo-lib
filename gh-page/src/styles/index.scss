@@ -55,7 +55,7 @@ $icon-size: 18px;
     }
 }
 .label-class { @include menu-label-base("c", #2791ff); }
-.label-constructor { @include menu-label-base("~", #ffc0cb); }
+.label-constructor { @include menu-label-base("~", #cccccc); }
 .label-parameter { @include menu-label-base("p", #f6bd38); }
-.label-method { @include menu-label-base("m", #aaaaaa); }
+.label-method { @include menu-label-base("m", #ffc0cb); }
 // endregion
