@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "22346136",
+      "name": "affix",
+      "font_class": "affix",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
       "icon_id": "249349",
       "name": "LOCK",
       "font_class": "lock",
