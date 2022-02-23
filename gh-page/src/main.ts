@@ -1,5 +1,5 @@
 import "element-plus/dist/index.css";
-// import "@/styles/iconfont.scss";
+import "@/styles/iconfont.scss";
 import "@/styles/index.scss";
 
 import { createApp } from "vue";
