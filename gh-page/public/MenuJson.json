@@ -1,0 +1,30 @@
+{
+    "clone": {
+        "plain": {
+            "type": "method",
+            "static": true,
+            "permission": "public",
+            "description": "description here",
+            "declare": "Clone.plain<T>(o: T): T"
+        },
+        "deep": {
+            "type": "method",
+            "static": true,
+            "permission": "public",
+            "description": "description here",
+            "declare": "Clone.deep<T>(o: T): T"
+        }
+    },
+    "queue": {
+
+    },
+    "search": {
+
+    },
+    "stack": {
+
+    },
+    "tree": {
+
+    }
+}
