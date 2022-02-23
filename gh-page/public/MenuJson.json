@@ -1,5 +1,5 @@
 {
-    "clone": {
+    "Clone": {
         "plain": {
             "type": "method",
             "static": true,
@@ -15,7 +15,7 @@
             "declare": "Clone.deep<T>(o: T): T"
         }
     },
-    "queue": {
+    "Queue": {
         "constructor": {
             "type": "constructor",
             "static": false,
@@ -74,13 +74,13 @@
             "declare": "clear(n?: number): void"
         }
     },
-    "search": {
+    "Search": {
 
     },
-    "stack": {
+    "Stack": {
 
     },
-    "tree": {
+    "Tree": {
 
     }
 }
