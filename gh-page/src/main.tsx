@@ -8,10 +8,8 @@ import { router } from "./router";
 
 import {ElMessage, MessageProps} from "element-plus";
 
-import App from "./App.vue";
-
 const _router = createRouter(router)
-const app = createApp(App)
+const app = createApp(() => <router-view/>)
 
 app.use(_router)
     .mount('#app')
