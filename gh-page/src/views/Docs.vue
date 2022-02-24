@@ -4,7 +4,7 @@
             <el-menu style="height: 100%;"
                 :default-active="`${query.class}-${query.field}`">
                 <el-menu-item index="icon-sheet" @click="showIconMap">
-                    <i class="label-map /" />
+                    <i class="label-map" />
                     <b style="font-size: 16px">Icon comparison table</b>
                 </el-menu-item>
                 <el-sub-menu
