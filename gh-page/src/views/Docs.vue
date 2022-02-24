@@ -16,7 +16,8 @@
                     </template>
                     <el-menu-item
                         v-for="(fieldSet, fieldName) in block"
-                        :index="`${className}-${fieldName}`" :key="`${className}-${fieldName}`"
+                        :index="`${className}-${fieldName}`"
+                        :key="`${className}-${fieldName}`"
                         @click="jumpTo(className, fieldName)">
                         <i :class="'label-'+fieldSet.type" />
                         <i :class="'label-'+fieldSet.permission" />
@@ -30,7 +31,10 @@
             <el-collapse class="class-collapse" v-model="activeItemField">
                 <el-collapse-item
                     v-for="(value, field) in activeItemDoc"
-                    :title="field" :name="field" :key="field">
+                    :name="field" :key="field">
+                    <template #title>
+                        <span :id="field">{{ field }}</span>
+                    </template>
                     <div>
                         {{ value }}
                     </div>
@@ -41,14 +45,14 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, ref} from "vue";
+import {computed, defineComponent, nextTick, ref} from "vue";
 import {
     ElMenu, ElSubMenu, ElMenuItem,
     ElCollapse, ElCollapseItem
 } from "element-plus";
 import axios from "axios";
 import {useRoute, useRouter} from "vue-router";
-import {customMessage} from "@/scripts";
+import {customMessage, smoothScrollById} from "@/scripts";
 
 // region types for menu
 type MenuQuery = {
@@ -84,7 +88,7 @@ export default defineComponent({
         // region computed params
         // current query object
         const query = computed((): MenuQuery => {
-            return useRoute().query
+            return useRoute().query as MenuQuery
         })
         // current active item`s value
         const activeItemDoc = computed(() => {
@@ -118,6 +122,9 @@ export default defineComponent({
         // menu item click callback
         const jumpTo = (className: string, fieldName: string) => {
             router.push({ query: { class: className, field: fieldName } })
+            nextTick(() => {
+                smoothScrollById(`${fieldName}`)
+            })
         }
         // endregion
 
