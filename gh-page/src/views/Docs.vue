@@ -8,7 +8,7 @@
                     <b style="font-size: 16px">Icon comparison table</b>
                 </el-menu-item>
                 <el-sub-menu
-                    v-for="(block, className) in MenuJson"
+                    v-for="(block, className) in DocsJson"
                     :index="className" :key="className">
                     <template #title>
                         <i class="label-class"/>
@@ -33,11 +33,12 @@
                     v-for="(value, field) in activeItemDoc"
                     :name="field" :key="field">
                     <template #title>
-                        <span :id="field">{{ field }}</span>
+                        <span :id="field" style="margin-right: 10px"><b>{{ field }}</b></span>
+                        <i :class="'label-'+value.type" />
+                        <i :class="'label-'+value.permission" />
+                        <i class="label-static" v-if="value.static"></i>
                     </template>
-                    <div>
-                        {{ value }}
-                    </div>
+                    <doc-block-template :block-value="value" />
                 </el-collapse-item>
             </el-collapse>
         </div>
@@ -46,30 +47,35 @@
 
 <script lang="ts">
 import {computed, defineComponent, nextTick, ref} from "vue";
+import {useRoute, useRouter} from "vue-router";
 import {
     ElMenu, ElSubMenu, ElMenuItem,
     ElCollapse, ElCollapseItem
 } from "element-plus";
 import axios from "axios";
-import {useRoute, useRouter} from "vue-router";
 import {customMessage, smoothScrollById} from "@/scripts";
+import DocBlockTemplate from "@/components/Docs/DocBlockTemplate.vue";
 
 // region types for menu
-type MenuQuery = {
-    class: MenuItem
+// all items
+type DocsItem = 'Clone' | 'Queue' | 'Search' | 'Stack' | 'Tree'
+// the query param of url
+type DocsQuery = {
+    class: DocItem
     field: string
 }
-type MenuConfig = { [k in MenuItem]: MenuBlock }
-type MenuItem = 'clone' | 'queue' | 'search' | 'stack' | 'tree'
-type MenuBlock = {
-    [k: string]: {
-        type: 'constructor' | 'parameter' | 'method'
-        static: boolean
-        permission: 'public' | 'private'
-        description: string
-        declare: string
-        example: string
-    }
+// whole DocsConfig.json
+type DocsConfig = { [k in DocsItem]: DocsBlock }
+type DocsBlock = {
+    [k: string]: DocBlockValue
+}
+export type DocsBlockValue = {
+    type: 'constructor' | 'parameter' | 'method'
+    static: boolean
+    permission: 'public' | 'private'
+    description: string
+    declare: string
+    example: string
 }
 // endregion
 
@@ -77,29 +83,30 @@ export default defineComponent({
     name: "Docs",
     components: {
         ElMenu, ElSubMenu, ElMenuItem,
-        ElCollapse, ElCollapseItem
+        ElCollapse, ElCollapseItem,
+        DocBlockTemplate
     },
     setup() {
         const router = useRouter()
         const _message = customMessage()
 
-        const MenuJson = ref<Partial<MenuConfig>>({})
+        const DocsJson = ref<Partial<DocsConfig>>({})
 
         // region computed params
         // current query object
-        const query = computed((): MenuQuery => {
-            return useRoute().query as MenuQuery
+        const query = computed((): DocsQuery => {
+            return useRoute().query as DocsQuery
         })
         // current active item`s value
         const activeItemDoc = computed(() => {
-            return MenuJson.value[query.value.class]
+            return DocsJson.value[query.value.class]
         })
         // endregion
 
         // region request the menu config json file
-        axios.get('/MenuJson.json')
-            .then(({data}: { data: MenuConfig }) => {
-                MenuJson.value = data
+        axios.get('/DocsConfig.json')
+            .then(({data}: { data: DocsConfig }) => {
+                DocsJson.value = data
             })
             .catch(() => {
                 _message({
@@ -118,10 +125,11 @@ export default defineComponent({
 
         // region view and switch
         // key of active item in collapse
-        const activeItemField = ref('')
+        const activeItemField = ref<string[]>([])
         // menu item click callback
         const jumpTo = (className: string, fieldName: string) => {
             router.push({ query: { class: className, field: fieldName } })
+            if(!activeItemField.value.includes(fieldName)) activeItemField.value.push(fieldName)
             nextTick(() => {
                 smoothScrollById(`${fieldName}`)
             })
@@ -129,7 +137,7 @@ export default defineComponent({
         // endregion
 
         return {
-            MenuJson,
+            DocsJson,
             query, activeItemDoc,
             iconMapVisible, showIconMap,
             jumpTo, activeItemField
