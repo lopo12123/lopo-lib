@@ -1,12 +1,9 @@
 <template>
     <div class="doc-block-template">
         <div class="label-box">
-            <div class="label-item">
-                <i :class="'label-'+blockValue.type" /> {{ blockValue.type }}
-            </div>
-            <div class="label-item">
-                <i :class="'label-'+blockValue.permission" /> {{ blockValue.permission }}
-            </div>
+            <div class="label-item"><i :class="'label-'+blockValue.type" /> {{ blockValue.type }}</div>
+            <div class="label-item"><i :class="'label-'+blockValue.permission" /> {{ blockValue.permission }}</div>
+            <div class="label-item" v-if="blockValue.static"><i class="label-static" /> static</div>
         </div>
     </div>
 </template>
