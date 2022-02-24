@@ -12,23 +12,11 @@ const customMessage = (): typeof ElMessage=> {
  * @description 平滑滚动到目标元素位置
  * @param id 目标元素的id
  */
-const scrollToById = (id: string) => {
-    // 当前滚动条的位置
-    const scrollTop = document.documentElement.scrollTop ||
-        window.pageYOffset ||
-        document.body.scrollTop
-    // 目标元素
-    const targetEl = document.getElementById(id)
-    if(!targetEl) return
-    else {
-        // 待滚动的距离 下正上负
-        const top = targetEl.offsetTop - scrollTop
-        // 滚动
-        window.scrollBy({ top, behavior: 'smooth' })
-    }
+const smoothScrollById = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({block: "start", inline: "nearest", behavior: 'smooth'})
 }
 
 export {
     customMessage,
-    scrollToById
+    smoothScrollById
 }
