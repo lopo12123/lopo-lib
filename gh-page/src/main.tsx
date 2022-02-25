@@ -8,20 +8,16 @@ import { createRouter } from "vue-router";
 import { router } from "./router";
 
 import {ElMessage, MessageProps} from "element-plus";
-
-import hljs from "highlight.js";
+import {VHighlight} from "@/components/Misc/highlight";
 
 const _router = createRouter(router)
 const app = createApp(() => <router-view/>)
 
 app.use(_router)
+    .use(VHighlight)
     .mount('#app')
 
 app.config.globalProperties.$message = (config: Partial<MessageProps>) => {
     ElMessage.closeAll()
     ElMessage(config)
 }
-
-app.directive('highlight', (el) => {
-    hljs.highlightElement(el)
-})
