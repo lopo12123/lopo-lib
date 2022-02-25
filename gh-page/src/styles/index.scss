@@ -1,5 +1,5 @@
-@import "./iconfont.scss";
-@import "./mixin.scss";
+@use "./iconfont.scss";
+@use "./mixin.scss";
 
 // region [normal settings]
 * {
@@ -20,7 +20,7 @@ img {
 
 // region [codemirror]
 .cm-scroller {
-    @include scrollBarStyle(#cccccc80);
+    @include mixin.scrollBarStyle(#cccccc80);
 }
 .cm-focused {
     outline: none!important;
