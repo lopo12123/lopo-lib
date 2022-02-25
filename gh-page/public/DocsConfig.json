@@ -4,15 +4,17 @@
             "type": "method",
             "static": true,
             "permission": "public",
-            "description": "description here",
-            "declare": "Clone.plain<T>(o: T): T"
+            "description": "Clone an object、array or anything else. (by build-in JSON)",
+            "declare": "Clone.plain<T>(o: T): T",
+            "example": ""
         },
         "deep": {
             "type": "method",
             "static": true,
             "permission": "public",
-            "description": "description here",
-            "declare": "Clone.deep<T>(o: T): T"
+            "description": "Clone an object、array or anything else. (by Reflect)",
+            "declare": "Clone.deep<T>(o: T): T",
+            "example": "const oriObj = {\n    type_number: 12345,\n    type_string: 'i am string',\n    type_boolean: false,\n    type_undefined: undefined,\n    type_null: null,\n    type_array: [1, 2, 3, 4, 5],\n    type_object: {\n        attr1: 1,\n        attr2: '2'\n    },\n    type_function: () => {\n        console.log('i am function')\n    }\n}"
         }
     },
     "Queue": {
@@ -20,8 +22,8 @@
             "type": "constructor",
             "static": false,
             "permission": "public",
-            "description": "description here",
-            "declare": "new Queue<T>(max: number)"
+            "description": "Create a queue with max length",
+            "declare": "constructor(max: number)"
         },
         "length": {
             "type": "parameter",
