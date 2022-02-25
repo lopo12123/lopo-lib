@@ -20,7 +20,8 @@
                 <code class="language-typescript" v-highlight>{{ blockValue.declare }}</code>
             </el-descriptions-item>
             <el-descriptions-item width="25%" label="Example">
-                {{ blockValue.example }}
+                <code-block v-if="blockValue.example && blockValue.example !== ''" :doc-content="blockValue.example" />
+                <div v-if="!blockValue.example || blockValue.example === ''" class="code-line-dark">no example</div>
             </el-descriptions-item>
         </el-descriptions>
     </div>
