@@ -17,7 +17,7 @@
                 {{ blockValue.description }}
             </el-descriptions-item>
             <el-descriptions-item width="25%" label="Declare" :span="2">
-                <div class="code-line-dark">{{ blockValue.declare }}</div>
+                <code class="language-typescript" v-highlight>{{ blockValue.declare }}</code>
             </el-descriptions-item>
             <el-descriptions-item width="25%" label="Example">
                 {{ blockValue.example }}
@@ -31,7 +31,6 @@ import {defineComponent, PropType} from "vue";
 import {ElDescriptions, ElDescriptionsItem} from "element-plus";
 import type {DocsBlockValue} from "@/views/Docs.vue";
 import CodeBlock from "@/components/Misc/CodeBlock.vue";
-
 
 export default defineComponent({
     name: "DocBlockTemplate",
@@ -49,7 +48,7 @@ export default defineComponent({
             type: Object as PropType<DocsBlockValue>
         }
     },
-    setup(props) {
+    setup() {
 
         return {}
     }
@@ -66,7 +65,7 @@ export default defineComponent({
     //}
     :deep(.el-descriptions__content) {
         color: #666666;
-        font-style: italic;
+        //font-style: italic;
     }
 }
 </style>
