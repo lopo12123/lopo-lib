@@ -8,6 +8,7 @@
 import {defineComponent, onMounted, onUnmounted, ref, shallowRef} from "vue";
 import {basicSetup, EditorState, EditorView} from "@codemirror/basic-setup";
 import {javascript} from "@codemirror/lang-javascript";
+import {oneDark} from "@codemirror/theme-one-dark";
 
 export default defineComponent({
     name: "CodeBlock",
@@ -28,7 +29,11 @@ export default defineComponent({
                 parent: elRef.value!,
                 state: EditorState.create({
                     doc: props.docContent,
-                    extensions: [basicSetup, javascript({ typescript: true })]
+                    extensions: [
+                        basicSetup,
+                        javascript({ typescript: true }),
+                        oneDark
+                    ]
                 })
             })
         })
