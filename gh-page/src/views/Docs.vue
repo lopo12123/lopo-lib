@@ -38,7 +38,7 @@
                         <div class="label-item"><i :class="'label-'+value.permission" /> {{ value.permission }}</div>
                         <div class="label-item" v-if="value.static"><i class="label-static" /> static</div>
                     </template>
-                    <doc-block-template :block-value="value" />
+                    <doc-block-template :block-name="field" :block-value="value" />
                 </el-collapse-item>
             </el-collapse>
         </div>
