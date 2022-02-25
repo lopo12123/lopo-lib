@@ -1,20 +1,49 @@
 <template>
     <div class="doc-block-template">
-        <div class="label-box">
-            <div class="label-item"><i :class="'label-'+blockValue.type" /> {{ blockValue.type }}</div>
-            <div class="label-item"><i :class="'label-'+blockValue.permission" /> {{ blockValue.permission }}</div>
-            <div class="label-item" v-if="blockValue.static"><i class="label-static" /> static</div>
-        </div>
+        <el-descriptions :column="2" border>
+            <el-descriptions-item width="25%" label="Name">
+                {{ blockName }}
+            </el-descriptions-item>
+            <el-descriptions-item width="25%" label="Type">
+                {{ blockValue.type }}
+            </el-descriptions-item>
+            <el-descriptions-item width="25%" label="Permission" >
+                {{ blockValue.permission }}
+            </el-descriptions-item>
+            <el-descriptions-item width="25%" label="Static" >
+                {{ blockValue.static }}
+            </el-descriptions-item>
+            <el-descriptions-item width="25%" label="Description" :span="2">
+                {{ blockValue.description }}
+            </el-descriptions-item>
+            <el-descriptions-item width="25%" label="Declare" :span="2">
+                <div class="code-line-dark">{{ blockValue.declare }}</div>
+            </el-descriptions-item>
+            <el-descriptions-item width="25%" label="Example">
+                {{ blockValue.example }}
+            </el-descriptions-item>
+        </el-descriptions>
     </div>
 </template>
 
 <script lang="ts">
 import {defineComponent, PropType} from "vue";
-import {DocsBlockValue} from "@/views/Docs.vue";
+import {ElDescriptions, ElDescriptionsItem} from "element-plus";
+import type {DocsBlockValue} from "@/views/Docs.vue";
+import CodeBlock from "@/components/Misc/CodeBlock.vue";
+
 
 export default defineComponent({
     name: "DocBlockTemplate",
+    components: {
+        ElDescriptions, ElDescriptionsItem,
+        CodeBlock
+    },
     props: {
+        blockName: {
+            required: true,
+            type: String
+        },
         blockValue: {
             required: true,
             type: Object as PropType<DocsBlockValue>
@@ -33,30 +62,11 @@ export default defineComponent({
     width: 100%;
     height: fit-content;
 
-    .label-box {
-        position: relative;
-        width: 100%;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-
-        .label-item {
-            position: relative;
-            width: fit-content;
-            height: 30px;
-            margin-right: 10px;
-            padding: 0 10px;
-            border: solid 1px #eeeeee;
-            border-radius: 15px;
-            background-color: #f5f7fa;
-            color: #777777;
-            font-style: italic;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            user-select: none;
-        }
+    //:deep(.el-descriptions__label) {
+    //}
+    :deep(.el-descriptions__content) {
+        color: #666666;
+        font-style: italic;
     }
 }
 </style>
