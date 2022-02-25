@@ -18,13 +18,6 @@ const routes: RouteRecordRaw[] = [
     },
 ]
 
-// todo delete it when prod
-routes.push({
-    path: '/test',
-    name: 'Test',
-    component: () => import("@/Test.vue")
-})
-
 export const router: RouterOptions = {
     history: createWebHashHistory(),
     routes
