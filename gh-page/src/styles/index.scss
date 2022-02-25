@@ -60,3 +60,18 @@ $icon-size: 18px;
 .label-parameter { @include menu-label-base("p", #f6bd38); }
 .label-method { @include menu-label-base("m", #ffc0cb); }
 // endregion
+
+// region [code-line-dark]
+.code-line-dark {
+    position: relative;
+    width: fit-content;
+    height: 100%;
+    padding: 0 10px;
+    border-radius: 5px;
+    background-color: #dcdfe6;
+    color: #666666;
+    font-family: Consolas;
+    font-size: 16px;
+    user-select: none;
+}
+// endregion
