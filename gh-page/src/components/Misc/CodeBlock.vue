@@ -31,6 +31,7 @@ export default defineComponent({
                     doc: props.docContent,
                     extensions: [
                         basicSetup,
+                        EditorState.readOnly.of(true),
                         javascript({ typescript: true }),
                         oneDark
                     ]
