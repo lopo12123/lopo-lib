@@ -6,6 +6,10 @@
     }
     &::-webkit-scrollbar-thumb {
         background-color: $color!important;
+        //background: linear-gradient(0deg,
+        //        #00000033 0%,
+        //        #00000066 50%,
+        //        #00000033 100%);;
         border-radius: 10px!important;
     }
     &::-webkit-scrollbar-track {
