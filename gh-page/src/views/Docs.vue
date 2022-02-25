@@ -33,10 +33,10 @@
                     v-for="(value, field) in activeItemDoc"
                     :name="field" :key="field">
                     <template #title>
-                        <span :id="field" style="margin-right: 10px"><b>{{ field }}</b></span>
-                        <i :class="'label-'+value.type" />
-                        <i :class="'label-'+value.permission" />
-                        <i class="label-static" v-if="value.static"></i>
+                        <span :id="field" class="field-name">{{ field }}</span>
+                        <div class="label-item"><i :class="'label-'+value.type" /> {{ value.type }}</div>
+                        <div class="label-item"><i :class="'label-'+value.permission" /> {{ value.permission }}</div>
+                        <div class="label-item" v-if="value.static"><i class="label-static" /> static</div>
                     </template>
                     <doc-block-template :block-value="value" />
                 </el-collapse-item>
@@ -61,13 +61,13 @@ import DocBlockTemplate from "@/components/Docs/DocBlockTemplate.vue";
 type DocsItem = 'Clone' | 'Queue' | 'Search' | 'Stack' | 'Tree'
 // the query param of url
 type DocsQuery = {
-    class: DocItem
+    class: DocsItem
     field: string
 }
 // whole DocsConfig.json
 type DocsConfig = { [k in DocsItem]: DocsBlock }
 type DocsBlock = {
-    [k: string]: DocBlockValue
+    [k: string]: DocsBlockValue
 }
 export type DocsBlockValue = {
     type: 'constructor' | 'parameter' | 'method'
@@ -173,7 +173,26 @@ export default defineComponent({
         overflow: hidden auto;
 
         .class-collapse {
-
+            .field-name {
+                margin-right: 20px;
+                font-size: 16px;
+            }
+            .label-item {
+                position: relative;
+                width: fit-content;
+                height: 30px;
+                margin-right: 10px;
+                padding: 0 10px;
+                border: solid 1px #eeeeee;
+                border-radius: 15px;
+                background-color: #f5f7fa;
+                color: #777777;
+                font-style: italic;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                user-select: none;
+            }
         }
     }
 }
