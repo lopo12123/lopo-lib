@@ -176,6 +176,7 @@ export default defineComponent({
             .field-name {
                 margin-right: 20px;
                 font-size: 16px;
+                font-family: Consolas, monospace;
             }
             .label-item {
                 position: relative;
