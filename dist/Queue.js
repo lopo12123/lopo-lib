@@ -1,8 +1,12 @@
 "use strict";
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Queue = void 0;
@@ -64,7 +68,7 @@ var Queue = /** @class */ (function () {
         // overflow: items.length < max
         else {
             var nextFirst = this._queue.length + items.length - this._max;
-            this._queue = __spreadArray(__spreadArray([], this._queue.slice(nextFirst)), items);
+            this._queue = __spreadArray(__spreadArray([], this._queue.slice(nextFirst), true), items, true);
             return this._max;
         }
     };

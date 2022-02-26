@@ -79,7 +79,7 @@ var Tree = /** @class */ (function () {
     Tree._Multilayer2FlatArray_PKeyed = function (ori, container, pid) {
         var _a, _b;
         // store this node`s id
-        var _thisId = (_a = ori.id) !== null && _a !== void 0 ? _a : uuid_1.v4();
+        var _thisId = (_a = ori.id) !== null && _a !== void 0 ? _a : (0, uuid_1.v4)();
         // generate this node
         var _thisNode = __assign(__assign({}, ori), { id: _thisId, extData: ori.extData });
         // delete the `children` field
@@ -98,7 +98,7 @@ var Tree = /** @class */ (function () {
     Tree._Multilayer2FlatArray_CKeyed = function (ori, container, pid) {
         var _a, _b;
         // store this node`s id
-        var _thisId = (_a = ori.id) !== null && _a !== void 0 ? _a : uuid_1.v4();
+        var _thisId = (_a = ori.id) !== null && _a !== void 0 ? _a : (0, uuid_1.v4)();
         // generate this node
         var _thisNode = __assign(__assign({}, ori), { id: _thisId, extData: ori.extData });
         // attach this node`s id into this parent`s `children` field
@@ -248,7 +248,7 @@ var Tree = /** @class */ (function () {
     Tree._Multilayer2NodeLink = function (ori, container, pid) {
         var _a, _b;
         // store this node`s id
-        var _thisId = (_a = ori.id) !== null && _a !== void 0 ? _a : uuid_1.v4();
+        var _thisId = (_a = ori.id) !== null && _a !== void 0 ? _a : (0, uuid_1.v4)();
         // generate this node
         var _thisNode = __assign(__assign({}, ori), { id: _thisId, extData: ori.extData });
         // delete the `children` field
@@ -258,7 +258,7 @@ var Tree = /** @class */ (function () {
         // store this link
         if (!!pid)
             container.links.push({
-                id: uuid_1.v4(),
+                id: (0, uuid_1.v4)(),
                 from: pid,
                 to: _thisId,
             });
@@ -352,7 +352,7 @@ var Tree = /** @class */ (function () {
             ori.forEach(function (_others) {
                 if (_others.parent === node.id) {
                     container.links.push({
-                        id: uuid_1.v4(),
+                        id: (0, uuid_1.v4)(),
                         from: node.id,
                         to: _others.id
                     });
@@ -374,7 +374,7 @@ var Tree = /** @class */ (function () {
             ori.forEach(function (_others) {
                 if (_others.children && _others.children.includes(node.id)) {
                     container.links.push({
-                        id: uuid_1.v4(),
+                        id: (0, uuid_1.v4)(),
                         from: _others.id,
                         to: node.id
                     });
