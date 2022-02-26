@@ -41,6 +41,18 @@
                     <doc-block-template :block-name="field" :block-value="value" />
                 </el-collapse-item>
             </el-collapse>
+
+            <el-dialog v-model="iconMapVisible" width="260px">
+                <div class="map-container">
+                    <div class="map-item"><i class="label-class" /> <span>class</span></div>
+                    <div class="map-item"><i class="label-constructor" /> <span>constructor</span></div>
+                    <div class="map-item"><i class="label-parameter" /> <span>parameter</span></div>
+                    <div class="map-item"><i class="label-method" /> <span>method</span></div>
+                    <div class="map-item"><i class="label-public" /> <span>public</span></div>
+                    <div class="map-item"><i class="label-private" /> <span>private</span></div>
+                    <div class="map-item"><i class="label-static" /> <span>static</span></div>
+                </div>
+            </el-dialog>
         </div>
     </div>
 </template>
@@ -50,7 +62,8 @@ import {computed, defineComponent, nextTick, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {
     ElMenu, ElSubMenu, ElMenuItem,
-    ElCollapse, ElCollapseItem
+    ElCollapse, ElCollapseItem,
+    ElDialog
 } from "element-plus";
 import axios from "axios";
 import {customMessage, smoothScrollById} from "@/scripts";
@@ -84,6 +97,7 @@ export default defineComponent({
     components: {
         ElMenu, ElSubMenu, ElMenuItem,
         ElCollapse, ElCollapseItem,
+        ElDialog,
         DocBlockTemplate
     },
     setup() {
@@ -194,6 +208,35 @@ export default defineComponent({
                 justify-content: space-between;
                 user-select: none;
             }
+        }
+    }
+}
+
+.map-container {
+    position: relative;
+    width: 260px;
+    height: fit-content;
+    padding: 10px 0;
+    border-radius: 20px;
+    background-color: #efefef;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    .map-item {
+        position: relative;
+        width: calc(100% - 60px);
+        height: 30px;
+        padding: 0 30px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        span {
+            color: #777777;
+            font-weight: bold;
+            font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
         }
     }
 }
