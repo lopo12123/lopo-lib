@@ -2,8 +2,8 @@
     <div class="root">
         <div class="root-nav-bar">
             <div class="root-logo-container">
-<!--                <img src="" alt="">-->
-                <span>logo</span>
+                <img class="logo" src="@/assets/logo.png" alt="" @click="jumpTo('npm')">
+                <span class="quote" title="梦游天姥吟留别" @click="jumpTo('quote')">海客谈瀛洲，烟涛微茫信难求。越人语天姥，云霞明灭或可睹！</span>
             </div>
             <div class="root-operate-container">
                 <i class="iconfont icon-github" title="Go to GitHub" @click="jumpTo('github')" />
@@ -17,24 +17,46 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import {defineComponent, onBeforeUnmount, onMounted} from "vue";
+import {useRouter} from "vue-router";
 
 type JumpList = {
     npm: string
     github: string
+    quote: string
 }
 
 export default defineComponent({
     name: "Root",
     setup() {
+        const router = useRouter()
+
         // region 链接跳转
         const jumpList: JumpList = {
             npm: 'https://www.npmjs.com/package/lopo-lib',
-            github: 'https://github.com/lopo12123/lopo-lib'
+            github: 'https://github.com/lopo12123/lopo-lib',
+            quote: 'https://hanyu.baidu.com/shici/detail?pid=c9445bc0f57411e58459c8e0eb15ce01&from=kg0'
         }
         const jumpTo = (to: keyof JumpList) => {
             window.open(jumpList[to], '_blank')
         }
+        // endregion
+
+        // region 聚焦/失焦事件
+        const focusEv = () => {
+            document.title = '嗦嗨嗨 😋'
+        }
+        const blurEv = () => {
+            document.title = '两眼一黑了 😅'
+        }
+        onMounted(() => {
+            window.addEventListener('focus', focusEv)
+            window.addEventListener('blur', blurEv)
+        })
+        onBeforeUnmount(() => {
+            window.removeEventListener('focus', focusEv)
+            window.removeEventListener('blur', blurEv)
+        })
         // endregion
 
         return {
@@ -64,8 +86,29 @@ export default defineComponent({
 
         .root-logo-container {
             position: relative;
-            width: 200px;
+            width: fit-content;
             height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+
+            .logo {
+                width: 40px;
+                height: 40px;
+                margin-right: 20px;
+                cursor: pointer;
+            }
+            .quote {
+                white-space: nowrap;
+                font-size: 14px;
+                font-family: cursive;
+                user-select: none;
+                cursor: pointer;
+                &:hover {
+                    opacity: 0.7;
+                    text-decoration: underline;
+                }
+            }
         }
         .root-operate-container {
             position: relative;
