@@ -9,7 +9,7 @@
                 </el-menu-item>
                 <el-sub-menu
                     v-for="(block, className) in DocsJson"
-                    :index="className" :key="className">
+                    :index="className+''" :key="className+''">
                     <template #title>
                         <i class="label-class"/>
                         <b style="font-size: 16px">{{ className }}</b>
@@ -18,7 +18,7 @@
                         v-for="(fieldSet, fieldName) in block"
                         :index="`${className}-${fieldName}`"
                         :key="`${className}-${fieldName}`"
-                        @click="jumpTo(className, fieldName)">
+                        @click="jumpTo(className+'', fieldName+'')">
                         <i :class="'label-'+fieldSet.type" />
                         <i :class="'label-'+fieldSet.permission" />
                         <i class="label-static" v-if="fieldSet.static"></i>
@@ -35,12 +35,12 @@
                     v-for="(value, field) in activeItemDoc"
                     :name="field" :key="field">
                     <template #title>
-                        <span :id="field" class="field-name">{{ field }}</span>
+                        <span :id="field+''" class="field-name">{{ field }}</span>
                         <div class="label-item"><i :class="'label-'+value.type" /> {{ value.type }}</div>
                         <div class="label-item"><i :class="'label-'+value.permission" /> {{ value.permission }}</div>
                         <div class="label-item" v-if="value.static"><i class="label-static" /> static</div>
                     </template>
-                    <doc-block-template :block-name="field" :block-value="value" />
+                    <doc-block-template :block-name="field+''" :block-value="value" />
                 </el-collapse-item>
             </el-collapse>
 
@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, nextTick, ref} from "vue";
+import {computed, defineComponent, nextTick, Ref, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {
     ElMenu, ElSubMenu, ElMenuItem,
@@ -80,7 +80,9 @@ type DocsQuery = {
     field: string
 }
 // whole DocsConfig.json
-type DocsConfig = { [k in DocsItem]: DocsBlock }
+type DocsConfig = {
+    [k in DocsItem]: DocsBlock
+} | { [k: string]: DocsBlock }
 type DocsBlock = {
     [k: string]: DocsBlockValue
 }
@@ -106,7 +108,7 @@ export default defineComponent({
         const router = useRouter()
         const _message = customMessage()
 
-        const DocsJson = ref<Partial<DocsConfig>>({})
+        const DocsJson = ref({}) as Ref<DocsConfig>
 
         // region computed params
         // current query object
@@ -115,12 +117,12 @@ export default defineComponent({
         })
         // current active item`s value
         const activeItemDoc = computed(() => {
-            return DocsJson.value[query.value.class]
+            return DocsJson.value[query.value.class] as DocsBlock
         })
         // endregion
 
         // region request the menu config json file
-        axios.get('/DocsConfig.json')
+        axios.get('./DocsConfig.json')
             .then(({data}: { data: DocsConfig }) => {
                 DocsJson.value = data
             })
