@@ -53,7 +53,7 @@ export default defineComponent({
 @use "src/styles/mixin";
 
 .code-block {
-    @include mixin.scrollBarStyle(#dddddd);
+    @include mixin.scrollBarStyle(#acacac);
     position: relative;
     width: 100%;
     height: fit-content;
