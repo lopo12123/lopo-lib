@@ -29,8 +29,6 @@ type JumpList = {
 export default defineComponent({
     name: "Root",
     setup() {
-        const router = useRouter()
-
         // region 链接跳转
         const jumpList: JumpList = {
             npm: 'https://www.npmjs.com/package/lopo-lib',
