@@ -28,6 +28,8 @@
             </el-menu>
         </div>
         <div class="docs-item-docs">
+            <span v-if="!query.class && !query.field" style="color: #777777; font-size: 14px; font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif">Click on the left menu to select the Documents item</span>
+
             <el-collapse class="class-collapse" v-model="activeItemField">
                 <el-collapse-item
                     v-for="(value, field) in activeItemDoc"
