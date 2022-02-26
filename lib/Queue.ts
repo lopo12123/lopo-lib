@@ -85,7 +85,7 @@ export class Queue<T> {
     }
 
     /**
-     * @description clear the queue and reset it`s max-length to `n` (if need)
+     * @description clear the queue and reset it`s max-length to 'n' (if need)
      */
     public clear(n?: number): void {
         this._queue = []
