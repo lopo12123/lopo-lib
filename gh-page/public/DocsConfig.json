@@ -5,16 +5,16 @@
             "static": true,
             "permission": "public",
             "description": "Clone an object、array or anything else. (by build-in JSON)",
-            "declare": "Clone.plain<T>(o: T): T",
-            "example": ""
+            "declaration": "function plain<T>(o: T): T",
+            "example": "const { Clone } = require('lopo-lib')\n\nconst oriObj = {\n    type_number: 12345,\n    type_string: 'i am string',\n    type_boolean: false,\n    type_undefined: undefined,\n    type_null: null,\n    type_array: [1, 2, 3, 4, 5],\n    type_object: {\n        attr1: 1,\n        attr2: '2'\n    },\n    type_function: () => {\n        console.log('i am function')\n    }\n}\n\nconst plainRes = Clone.plain(oriObj)\nconsole.log(plainRes)\n\n// the result in console is:\n// {\n//     type_number: 12345,\n//     type_string: 'i am string',\n//     type_boolean: false,\n//     type_null: null,\n//     type_array: [ 1, 2, 3, 4, 5 ],\n//     type_object: { attr1: 1, attr2: '2' }\n// }"
         },
         "deep": {
             "type": "method",
             "static": true,
             "permission": "public",
             "description": "Clone an object、array or anything else. (by Reflect)",
-            "declare": "Clone.deep<T>(o: T): T",
-            "example": "const oriObj = {\n    type_number: 12345,\n    type_string: 'i am string',\n    type_boolean: false,\n    type_undefined: undefined,\n    type_null: null,\n    type_array: [1, 2, 3, 4, 5],\n    type_object: {\n        attr1: 1,\n        attr2: '2'\n    },\n    type_function: () => {\n        console.log('i am function')\n    }\n}"
+            "declaration": "function deep<T>(o: T): T",
+            "example": "const {Clone} = require('lopo-lib')\n\nconst oriObj = {\n    type_number: 12345,\n    type_string: 'i am string',\n    type_boolean: false,\n    type_undefined: undefined,\n    type_null: null,\n    type_array: [1, 2, 3, 4, 5],\n    type_object: {\n        attr1: 1,\n        attr2: '2'\n    },\n    type_function: () => {\n        console.log('i am function')\n    }\n}\n\nconst deepRes = Clone.deep(oriObj)\nconsole.log(deepRes)\n\n// the result in console is:\n// {\n//     type_number: 12345,\n//     type_string: 'i am string',\n//     type_boolean: false,\n//     type_undefined: undefined,\n//     type_null: null,\n//     type_array: [ 1, 2, 3, 4, 5 ],\n//     type_object: { attr1: 1, attr2: '2' },\n//     type_function: [Function (anonymous)]\n// }"
         }
     },
     "Queue": {
@@ -23,57 +23,62 @@
             "static": false,
             "permission": "public",
             "description": "Create a queue with max length",
-            "declare": "constructor(max: number)"
+            "declaration": "Queue<T>.constructor(max: number)",
+            "example": "const { Queue } = require('lopo-lib')\n\nconst queue = new Queue(5)"
         },
         "length": {
             "type": "parameter",
             "static": false,
             "permission": "public",
-            "description": "description here",
-            "declare": "const length: number = new Queue<string>(5).length",
-            "example": "example 1"
+            "description": "queue`s length",
+            "declaration": "public get Queue<T>.length(): number",
+            "example": "const { Queue } = require('../dist/index')\n\nconst queue = new Queue(5)\n\nconsole.log(queue.length)  // when init, the length of the queue is 0 (empty)\n\nqueue.in('item0', 'item1')  // push some items into the queue\nconsole.log(queue.length)  // now its`length is 2"
         },
         "create": {
             "type": "method",
             "static": true,
             "permission": "public",
-            "description": "description here",
-            "declare": "Queue.create<T>(max: T): Queue<T>"
+            "description": "create a queue with max length ( alias of 'new Queue(n)' )",
+            "declaration": "public static Queue<T>.create<_T>(max: number): Queue<_T>",
+            "example": "const { Queue } = require('lopo-lib')\n\nconst queue = Queue.create(5)  // as well as 'new Queue(5)'"
         },
         "getQueue": {
             "type": "method",
             "static": false,
             "permission": "public",
-            "description": "description here",
-            "declare": "getQueue(): T[]"
+            "description": "returns a shallow copy of current queue",
+            "declaration": "public Queue<T>.getQueue(): T[]",
+            "example": "const { Queue } = require('lopo-lib')\n\nconst queue = new Queue(5)\n\nconsole.log(queue.getQueue())  // []\n\nqueue.in('item0', 'item1')  // push some items into the queue\nconsole.log(queue.getQueue())  // ['item0', 'item1']"
         },
         "in": {
             "type": "method",
             "static": false,
             "permission": "public",
-            "description": "description here",
-            "declare": "in(...items: T[]): number"
+            "description": "push some items into the queue and return current length of the queue",
+            "declaration": "public Queue<T>.in(...items: T[]): number",
+            "example": "const { Queue } = require('lopo-lib')\n\nconst queue = new Queue(5)\n\nconsole.log(queue.getQueue())  // []\n\nconst count = queue.in('item0', 'item1')  // push some items into the queue\nconsole.log(queue.getQueue())  // ['item0', 'item1']\nconsole.log(count)  // 2"
         },
         "out": {
             "type": "method",
             "static": false,
             "permission": "public",
-            "description": "description here",
-            "declare": "out(n: number): T[]"
+            "description": "take n items from the queue",
+            "declaration": "public Queue<T>.out(n: number): T[]",
+            "example": "const { Queue } = require('../dist/index')\n\nconst queue = new Queue(5)\n\nqueue.in('item0', 'item1', 'item3')  // push some items into the queue\n\nconst takeSome = queue.out(2)\nconsole.log(takeSome)  // the items we take out: ['item0', 'item1']\nconsole.log(queue.getQueue())  // the rest of queue: ['item3']"
         },
         "circle": {
             "type": "method",
             "static": false,
             "permission": "public",
             "description": "description here",
-            "declare": "circle(n: number, reverse: boolean = false): void"
+            "declaration": "circle(n: number, reverse: boolean = false): void"
         },
         "clear": {
             "type": "method",
             "static": false,
             "permission": "public",
             "description": "description here",
-            "declare": "clear(n?: number): void"
+            "declaration": "clear(n?: number): void"
         }
     },
     "Search": {
