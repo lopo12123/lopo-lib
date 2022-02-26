@@ -32,7 +32,7 @@
             "permission": "public",
             "description": "queue`s length",
             "declaration": "public get Queue<T>.length(): number",
-            "example": "const { Queue } = require('../dist/index')\n\nconst queue = new Queue(5)\n\nconsole.log(queue.length)  // when init, the length of the queue is 0 (empty)\n\nqueue.in('item0', 'item1')  // push some items into the queue\nconsole.log(queue.length)  // now its`length is 2"
+            "example": "const { Queue } = require('lopo-lib')\n\nconst queue = new Queue(5)\n\nconsole.log(queue.length)  // when init, the length of the queue is 0 (empty)\n\nqueue.in('item0', 'item1')  // push some items into the queue\nconsole.log(queue.length)  // now its`length is 2"
         },
         "create": {
             "type": "method",
@@ -56,7 +56,7 @@
             "permission": "public",
             "description": "push some items into the queue and return current length of the queue",
             "declaration": "public Queue<T>.in(...items: T[]): number",
-            "example": "const { Queue } = require('lopo-lib')\n\nconst queue = new Queue(5)\n\nconsole.log(queue.getQueue())  // []\n\nconst count = queue.in('item0', 'item1')  // push some items into the queue\nconsole.log(queue.getQueue())  // ['item0', 'item1']\nconsole.log(count)  // 2"
+            "example": "const { Queue } = require('lopo-lib')\n\nconst queue = new Queue(5)\n\n// 1. push some items into the queue\nlet count = queue.in('item0', 'item1', 'item2')\nconsole.log(queue.getQueue(), count)\n// ['item0', 'item1', 'item2'] 3\n\n// 2. push more items\ncount = queue.in('item3', 'item4', 'item5')\nconsole.log(queue.getQueue(), count)\n// ['item1', 'item2', 'item3', 'item4', 'item5'] 5\n// and the the first item 'item0' was pushed out of the queue\n\n// 3. push more items (more then max-length of the queue)\ncount = queue.in('item6', 'item7', 'item8', 'item9', 'item10', 'item11')\nconsole.log(queue.getQueue(), count)\n// ['item7', 'item8', 'item9', 'item10', 'item11'] 5\n// only the last 5 items in the queue will be kept"
         },
         "out": {
             "type": "method",
@@ -64,21 +64,39 @@
             "permission": "public",
             "description": "take n items from the queue",
             "declaration": "public Queue<T>.out(n: number): T[]",
-            "example": "const { Queue } = require('../dist/index')\n\nconst queue = new Queue(5)\n\nqueue.in('item0', 'item1', 'item3')  // push some items into the queue\n\nconst takeSome = queue.out(2)\nconsole.log(takeSome)  // the items we take out: ['item0', 'item1']\nconsole.log(queue.getQueue())  // the rest of queue: ['item3']"
+            "example": "const { Queue } = require('lopo-lib')\n\nconst queue = new Queue(5)\nqueue.in('item0', 'item1', 'item2', 'item3', 'item4')\n\n// 1. take some items from the queue\nlet take = queue.out(3)\nconsole.log(take)\n// ['item0', 'item1', 'item2'] -- that is what we need\n\n// 2. take more items from the queue (more than what's left in the queue)\ntake = queue.out(3)\nconsole.log(take)\n// ['item3', 'item4'] -- it just takes out the rest\n\n// 3. take some items from the empty queue\ntake = queue.out(1)\nconsole.log(take)\n// [] -- returns an empty array"
         },
         "circle": {
             "type": "method",
             "static": false,
             "permission": "public",
-            "description": "description here",
-            "declaration": "circle(n: number, reverse: boolean = false): void"
+            "description": "move the queue forward n positions, and the items dequeued at the head are re-queued in order",
+            "declaration": "public Queue<T>.circle(n: number, reverse: boolean = false): void",
+            "example": "const { Queue } = require('lopo-lib')\n\nconst queue = new Queue(5)\nqueue.in('item0', 'item1', 'item2')\n\n// 1. rotate forward 1 position\nqueue.circle(1)\nconsole.log(queue.getQueue())\n// ['item1', 'item2', 'item0']\n\n// 2. reverse rotation 2 position\nqueue.circle(2, true)\nconsole.log(queue.getQueue())\n// ['item2', 'item0', 'item1']"
         },
         "clear": {
             "type": "method",
             "static": false,
             "permission": "public",
-            "description": "description here",
-            "declaration": "clear(n?: number): void"
+            "description": "clear the queue and reset its max-length to 'n' (if need)",
+            "declaration": "public Queue<T>.clear(n?: number): void",
+            "example": "const { Queue } = require('lopo-lib')\n\nconst queue = new Queue(5)\nqueue.in('item0', 'item1', 'item2', 'item3', 'item4', 'item5')\nconsole.log(queue.getQueue(), queue.length)\n// ['item1', 'item2', 'item3', 'item4', 'item5'] 5\n\nqueue.clear(3)\nqueue.in('item0', 'item1', 'item2', 'item3', 'item4', 'item5')\nconsole.log(queue.getQueue(), queue.length)\n// ['item3', 'item4', 'item5'] 3 -- now the max-length of the queue has been set to 3"
+        },
+        "_max": {
+            "type": "parameter",
+            "static": false,
+            "permission": "private",
+            "description": "max length of the queue",
+            "declaration": "private Queue<T>._max: number",
+            "example": "const { Queue } = require('lopo-lib')\n\nconst queue = new Queue(5)\nconsole.log(queue._max)  // 5"
+        },
+        "_queue": {
+            "type": "parameter",
+            "static": false,
+            "permission": "private",
+            "description": "current queue (use instance.getQueue() instead)",
+            "declaration": "private Queue<T>._queue: T[]",
+            "example": "const { Queue } = require('lopo-lib')\n\nconst queue = new Queue(5)\nqueue.in('item0', 'item1', 'item2', 'item3', 'item4')\nconsole.log(queue._queue)  // ['item0', 'item1', 'item2', 'item3', 'item4']"
         }
     },
     "Search": {
