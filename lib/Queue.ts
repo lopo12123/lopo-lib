@@ -3,13 +3,13 @@
  */
 export class Queue<T> {
     /**
-     * @description max length
+     * @description max length of the queue
      * @private
      */
     private _max: number
 
     /**
-     * @description current queue
+     * @description current queue (use instance.getQueue() instead)
      * @private
      */
     private _queue: T[] = []
