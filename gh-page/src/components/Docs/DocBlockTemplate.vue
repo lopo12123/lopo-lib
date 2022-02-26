@@ -16,8 +16,8 @@
             <el-descriptions-item width="25%" label="Description" :span="2">
                 {{ blockValue.description }}
             </el-descriptions-item>
-            <el-descriptions-item width="25%" label="Declare" :span="2">
-                <code class="language-typescript" v-highlight>{{ blockValue.declare }}</code>
+            <el-descriptions-item width="25%" label="Declaration" :span="2">
+                <code class="language-typescript" v-highlight>{{ blockValue.declaration }}</code>
             </el-descriptions-item>
             <el-descriptions-item width="25%" label="Example">
                 <code-block v-if="blockValue.example && blockValue.example !== ''" :doc-content="blockValue.example" />

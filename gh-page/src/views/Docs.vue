@@ -89,7 +89,7 @@ export type DocsBlockValue = {
     static: boolean
     permission: 'public' | 'private'
     description: string
-    declare: string
+    declaration: string
     example: string
 }
 // endregion
