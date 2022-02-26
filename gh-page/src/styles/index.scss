@@ -18,6 +18,23 @@ img {
 }
 // endregion
 
+// region [el-dialog]
+.el-dialog {
+    background: transparent!important;
+    border: none!important;
+    outline: none!important;
+    box-shadow: none!important;
+
+    .el-dialog__header, .el-dialog__body, .el-dialog__footer {
+        margin: 0;
+        padding: 0;
+    }
+    .el-dialog__header {
+        display: none;
+    }
+}
+// endregion
+
 // region [codemirror]
 .cm-scroller {
     @include mixin.scrollBarStyle(#cccccc80);
