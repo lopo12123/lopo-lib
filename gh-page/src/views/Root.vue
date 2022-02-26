@@ -48,6 +48,7 @@ export default defineComponent({
             document.title = '两眼一黑了 😅'
         }
         onMounted(() => {
+            focusEv()
             window.addEventListener('focus', focusEv)
             window.addEventListener('blur', blurEv)
         })
