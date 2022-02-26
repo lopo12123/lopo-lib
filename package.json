@@ -1,6 +1,6 @@
 {
     "name": "lopo-lib",
-    "version": "2.0.2",
+    "version": "2.0.2-alpha",
     "description": "some commonly used functions",
     "main": "./dist/index.js",
     "scripts": {
@@ -23,7 +23,7 @@
     },
     "homepage": "https://github.com/lopo12123/lopo-lib#readme",
     "files": [
-        "./dist", "./lib"
+        "dist", "lib"
     ],
     "dependencies": {
         "uuid": "^8.3.2"
