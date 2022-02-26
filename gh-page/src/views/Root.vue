@@ -44,7 +44,7 @@ export default defineComponent({
 
         // region 聚焦/失焦事件
         const focusEv = () => {
-            document.title = '对你嗦嗨嗨 😋'
+            document.title = '给你嗦嗨嗨 😋'
         }
         const blurEv = () => {
             document.title = '两眼一黑了 😅'
