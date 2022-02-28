@@ -24,7 +24,7 @@
             "permission": "public",
             "description": "Create a queue with max length",
             "declaration": "Queue<T>.constructor(max: number)",
-            "example": "const { Queue } = require('lopo-lib')\n\nconst queue = new Queue(5)"
+            "example": "const { Queue } = require('lopo-lib')\n\nconst queue = new Queue(5)  // or new Queue<string>(5) in ts usage"
         },
         "length": {
             "type": "parameter",
@@ -40,7 +40,7 @@
             "permission": "public",
             "description": "create a queue with max length ( alias of 'new Queue(n)' )",
             "declaration": "public static Queue<T>.create<_T>(max: number): Queue<_T>",
-            "example": "const { Queue } = require('lopo-lib')\n\nconst queue = Queue.create(5)  // as well as 'new Queue(5)'"
+            "example": "const { Queue } = require('lopo-lib')\n\n// as well as 'new Queue(5)'\nconst queue = Queue.create(5)  // or Queue.create<string>(5) in ts usage"
         },
         "getQueue": {
             "type": "method",
@@ -100,10 +100,79 @@
         }
     },
     "Search": {
-
+        "dfs": {
+            "type": "method",
+            "static": true,
+            "permission": "public",
+            "description": "depth first search",
+            "declaration": "public static Search.dfs<TreeNode extends object, K>(root: TreeNode, condition: (node: TreeNode) => boolean, childKey: string = 'children', resultFilter: (node: TreeNode) => K = node => node): K | null",
+            "example": "const { Search } = require('lopo-lib')\n\ntype TreeNode = {\n    id: string\n    name: string\n    children?: TreeNode[]\n}\nconst tree: TreeNode = {\n    id: '1',\n    name: 'node 1',\n    children: [\n        {\n            id: '2',\n            name: 'node 2',\n            children: [\n                {\n                    id: '5',\n                    name: 'node 5',\n                    children: []\n                },\n                {\n                    id: '6',\n                    name: 'node 6'\n                }\n            ]\n        },\n        {\n            id: '3',\n            name: 'node 3',\n            children: []\n        },\n        {\n            id: '4',\n            name: 'node 4'\n        }\n    ]\n}\n\n// 1. by default it will return a reference to the entire subtree with the target node as the root node.\n//    if you modify the contents of the subTree now, the tree will also be modified.\nconst subTree = Search.dfs(tree, (node) => {\n    return node.name === 'node 2'\n})\nconsole.log(subTree)\n// {\n//     id: '2',\n//     name: 'node 2',\n//     children: [\n//         { id: '5', name: 'node 5', children: [] },\n//         { id: '6', name: 'node 6' }\n//     ]\n// }\n\n// 2. you can set filter functions to filter the returned results\n//    you can do copy work in the filter function or just filter the result to return\nconst filteredSubTree = Search.dfs(\n    tree,\n    (node) => {\n        return node.name === 'node 2'\n    },\n    'children',\n    (res) => {\n        const realRes = JSON.parse(JSON.stringify(res))  // do copy here\n        delete realRes.children  // deal with original result\n        return realRes\n    }\n)\nconsole.log(filteredSubTree)\n// { id: '2', name: 'node 2' }\n\n// 3. you can specify the key of the subtree by passing in the 'childKey' parameter according to the actual situation.\n// no example for this..."
+        }
     },
     "Stack": {
-
+        "constructor": {
+            "type": "constructor",
+            "static": false,
+            "permission": "public",
+            "description": "Create a stack with max length (unlimited if the parameter 'max' equals '-1')",
+            "declaration": "Stack<T>.constructor(max: number)",
+            "example": "const { Stack } = require('lopo-lib')\n\nconst stack = new Stack(5)  // or new Stack<string>(5) in ts usage"
+        },
+        "depth": {
+            "type": "parameter",
+            "static": false,
+            "permission": "public",
+            "description": "stack`s depth",
+            "declaration": "public get Stack<T>.depth(): number",
+            "example": "const { Stack } = require('lopo-lib')\n\nconst stack = new Stack(5)\nconsole.log(stack.depth)  // 0\nstack.in('item0', 'item1', 'item2')\nconsole.log(stack.depth)  // 3"
+        },
+        "create": {
+            "type": "method",
+            "static": true,
+            "permission": "public",
+            "description": "create a stack with max length ( alias of 'new Stack(n)' )",
+            "declaration": "public static Stack<T>.create<_T>(max: number): Stack<_T>",
+            "example": "const { Stack } = require('lopo-lib')\n\n// as well as 'new Stack(5)'\nconst stack = Stack.create(5)  // or Stack.create<string>(5) in ts usage"
+        },
+        "in": {
+            "type": "method",
+            "static": false,
+            "permission": "public",
+            "description": "push some items into the stack and return current depth of the stack (it will automatically ignore the rest items when the stack is full)",
+            "declaration": "public Stack<T>.in(...items: T[]): number",
+            "example": "const { Stack } = require('lopo-lib')\n\nconst stack = new Stack(5)\n\n// 1. push some items into the stack\nlet count = stack.in('item0', 'item1', 'item2')\nconsole.log(stack.getStack(), count)\n// ['item0', 'item1', 'item2'] 3\n\n// 2. push more items\ncount = stack.in('item3', 'item4', 'item5')\nconsole.log(stack.getStack(), count)\n// ['item0', 'item1', 'item2', 'item3', 'item4'] 5\n// and the the rest item 'item5' was ignored cause the stack is full"
+        },
+        "out": {
+            "type": "method",
+            "static": false,
+            "permission": "public",
+            "description": "take n items from the stack",
+            "declaration": "public Stack<T>.out(n: number): T[]",
+            "example": "const { Stack } = require('lopo-lib')\n\nconst stack = new Stack(5)\nstack.in('item0', 'item1', 'item2', 'item3', 'item4')\n\n// 1. take some items from the stack\nlet take = stack.out(3)\nconsole.log(take)\n// ['item4', 'item3', 'item2'] -- that is what we need\n\n// 2. take more items from the stack (more than what's left in the stack)\ntake = stack.out(3)\nconsole.log(take)\n// ['item1', 'item0'] -- it just takes out the rest\n\n// 3. take some items from the empty stack\ntake = stack.out(1)\nconsole.log(take)\n// [] -- returns an empty array"
+        },
+        "clear": {
+            "type": "method",
+            "static": false,
+            "permission": "public",
+            "description": "clear the queue and reset it`s max-length to `n` (if need)",
+            "declaration": "public Stack<T>.clear(n?: number): void",
+            "example": "const { Stack } = require('lopo-lib')\n\nconst stack = new Stack(5)\nstack.in('item0', 'item1', 'item2', 'item3', 'item4')\n\nconsole.log(stack.getStack(), stack.depth)\n// ['item0', 'item1', 'item2', 'item3', 'item4'] 5\n\nstack.clear(3)\nstack.in('item0', 'item1', 'item2', 'item3', 'item4')\nconsole.log(stack.getStack(), stack.depth)\n// ['item0', 'item1', 'item2'] 3"
+        },
+        "_max": {
+            "type": "parameter",
+            "static": false,
+            "permission": "private",
+            "description": "max depth of the stack (unlimited if '_max === -1')",
+            "declaration": "private Stack<T>._max: number",
+            "example": "const { Stack } = require('lopo-lib')\n\nconst stack = new Stack(5)\nconsole.log(stack._max)  // 5"
+        },
+        "_stack": {
+            "type": "parameter",
+            "static": false,
+            "permission": "private",
+            "description":"current stack (use instance.getStack() instead)",
+            "example": "const { Stack } = require('lopo-lib')\n\nconst stack = new Stack(5)\nstack.in('item0', 'item1', 'item2', 'item3', 'item4')\nconsole.log(stack._stack)  // ['item0', 'item1', 'item2', 'item3', 'item4']"
+        }
     },
     "Tree": {
 
