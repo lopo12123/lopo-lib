@@ -14,7 +14,7 @@
                 {{ blockValue.static }}
             </el-descriptions-item>
             <el-descriptions-item width="25%" label="Description" :span="2">
-                {{ blockValue.description }}
+                <pre>{{ blockValue.description }}</pre>
             </el-descriptions-item>
             <el-descriptions-item width="25%" label="Declaration" :span="2">
                 <code class="language-typescript" v-highlight :key="index"
@@ -65,11 +65,16 @@ export default defineComponent({
     width: 100%;
     height: fit-content;
 
-    //:deep(.el-descriptions__label) {
-    //}
+    :deep(.el-descriptions__label) {
+        font-family: Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif!important;
+    }
     :deep(.el-descriptions__content) {
         color: #666666;
-        //font-style: italic;
+        font-family: Consolas, serif!important;
+        pre {
+            font-family: Consolas, serif!important;
+            white-space: break-spaces;
+        }
     }
 }
 </style>
