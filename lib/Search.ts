@@ -36,12 +36,14 @@ export class Search {
      * @param childKey the key of child branches
      * @param resultFilter do filter with the target node before return
      */
-    public static dfs<TreeNode extends object>(
+    public static dfs<TreeNode extends object, K>(
         root: TreeNode,
         condition: (node: TreeNode) => boolean,
         childKey: string = 'children',
-        resultFilter: (node: TreeNode) => any = node => node
-    ): any | null {
+        resultFilter?: (node: TreeNode) => K
+    ): K | null {
+        if(!resultFilter) resultFilter = node => node as any as K
+
         return Search._dfs(root, condition, childKey, resultFilter)
     }
 }
