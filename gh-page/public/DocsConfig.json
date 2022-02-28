@@ -1,10 +1,10 @@
 {
     "Overview": {
-        "Clone": "simply clone and deep clone",
-        "Queue": "22",
-        "Search": "33",
-        "Stack": "44",
-        "Tree": "55"
+        "Clone": "For copying objects or arrays or any other type of data.\n· 'plain' will use the built-in JSON method to copy (it will lose some information, such as function);\n· 'deep' will use the built-in Reflect method to recursively copy properties and methods, all properties and methods are not lost.",
+        "Queue": "'Queue' data structure.\n· including methods for enqueuing, dequeuing, looping (forward and reverse), and emptying the queue.",
+        "Search": "Various search methods.\n· including dfs.",
+        "Stack": "The 'stack' data structure.\n· including methods such as pushing, popping, and emptying the stack.",
+        "Tree": "Conversion between three common 'tree' data structures.\n· There are three types of tree structures:\n    1. 'multi-layer' - a tree structure represented by a nested representation of objects through the 'children' field;\n    2. 'flat-array' - flatten the nodes of the tree, and express the parent-child relationship between nodes through the 'parent' or 'children' fields;\n    3. 'node-link' - stores all nodes of the tree and their connection relationships in the 'nodes' and 'links' fields of an object, where node must have an id attribute, and link specifies the parent-child relationship of the node through the from-to method.\n· Purpose of these data structures:\n    1. multi-layer - one of the most common representations. tree data that can be used to construct the echarts drawing library;\n    2. flat-array - tree data that can be used to construct the gojs drawing library;\n    3. node-link - tree data that can be used to construct the vis-network drawing library;\n    4. Using this class can quickly convert the tree data required by several drawing libraries."
     },
     "Clone": {
         "plain": {
