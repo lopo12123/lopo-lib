@@ -19,6 +19,7 @@ export default defineConfig({
         outDir: '../docs',
         emptyOutDir: true,
         rollupOptions: {
+            // external: [''],
             output: {
                 manualChunks: (id) => {
                     if(id.includes('node_modules')) {
