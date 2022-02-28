@@ -1,6 +1,6 @@
 {
     "name": "lopo-lib",
-    "version": "2.0.2-alpha",
+    "version": "2.0.2-fixed",
     "description": "some commonly used functions",
     "main": "./dist/index.js",
     "scripts": {
