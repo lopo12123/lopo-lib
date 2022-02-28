@@ -30,6 +30,10 @@
         <div class="docs-item-docs">
             <span v-if="!query.class && !query.field" style="color: #777777; font-size: 14px; font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif">Click on the left menu to select the Documents item</span>
 
+            <div class="description-box">
+                <pre>{{ activeItemDescription }}</pre>
+            </div>
+
             <el-collapse class="class-collapse" v-model="activeItemField">
                 <el-collapse-item
                     v-for="(value, field) in activeItemDoc"
@@ -82,7 +86,9 @@ type DocsQuery = {
 // whole DocsConfig.json
 type DocsConfig = {
     [k in DocsItem]: DocsBlock
-} | { [k: string]: DocsBlock }
+} & {
+    Overview: { [k in DocsItem]: string }
+} & { [k: string]: DocsBlock }
 type DocsBlock = {
     [k: string]: DocsBlockValue
 }
@@ -109,6 +115,7 @@ export default defineComponent({
         const _message = customMessage()
 
         const DocsJson = ref({}) as Ref<DocsConfig>
+        const descriptionMap = ref({}) as Ref<{ [k in Exclude<DocsItem, 'Overview'>]: string }>
 
         // region computed params
         // current query object
@@ -119,12 +126,18 @@ export default defineComponent({
         const activeItemDoc = computed(() => {
             return DocsJson.value[query.value.class] as DocsBlock
         })
+        const activeItemDescription = computed(() => {
+            return descriptionMap.value[query.value.class]
+        })
         // endregion
 
         // region request the menu config json file
         axios.get('./DocsConfig.json')
             .then(({data}: { data: DocsConfig }) => {
-                DocsJson.value = data
+                descriptionMap.value = data.Overview
+                const copy = JSON.parse(JSON.stringify(data))
+                delete copy.Overview
+                DocsJson.value = copy
             })
             .catch(() => {
                 _message({
@@ -156,7 +169,7 @@ export default defineComponent({
 
         return {
             DocsJson,
-            query, activeItemDoc,
+            query, activeItemDoc, activeItemDescription,
             iconMapVisible, showIconMap,
             jumpTo, activeItemField
         }
@@ -178,17 +191,29 @@ export default defineComponent({
     .docs-side-menu {
         @include scrollBarStyle();
         position: relative;
-        width: 260px;
+        width: 360px;
         height: 100%;
         overflow: hidden auto;
     }
     .docs-item-docs {
         @include scrollBarStyle(#cccccc);
         position: relative;
-        width: calc(100% - 260px - 100px);
+        width: calc(100% - 360px - 100px);
         height: calc(100% - 100px);
         padding: 50px;
         overflow: hidden auto;
+
+        .description-box {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            pre {
+                font-family: Consolas, serif;
+                font-weight: bold;
+                white-space: break-spaces;
+            }
+        }
 
         .class-collapse {
             .field-name {
