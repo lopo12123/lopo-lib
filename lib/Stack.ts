@@ -18,7 +18,7 @@ export class Stack<T> {
      * @description create a stack with max length
      */
     public static create<_T>(max: number) {
-        return new Stack(max)
+        return new Stack<_T>(max)
     }
 
     /**
