@@ -35,7 +35,7 @@ export class Tree {
         return resultTree
     }
     /**
-     * @description [Tree_FlatArray] trans from `children-keyed` to `parent-keyed`
+     * @description [Tree_FlatArray] trans from `child-keyed` to `parent-keyed`
      */
     public static TransKeyed_C2P(ori: Tree_FlatArray_CKeyed): Tree_FlatArray_PKeyed {
         // result tree array
