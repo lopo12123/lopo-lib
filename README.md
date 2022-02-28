@@ -32,5 +32,5 @@
 
 ### Docs  
 
-[click to see](https://lopo12123.github.io/lopo-lib)
+[click here](https://lopo12123.github.io/lopo-lib)
 
