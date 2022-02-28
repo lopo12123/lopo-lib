@@ -37,7 +37,8 @@ var Search = /** @class */ (function () {
      */
     Search.dfs = function (root, condition, childKey, resultFilter) {
         if (childKey === void 0) { childKey = 'children'; }
-        if (resultFilter === void 0) { resultFilter = function (node) { return node; }; }
+        if (!resultFilter)
+            resultFilter = function (node) { return node; };
         return Search._dfs(root, condition, childKey, resultFilter);
     };
     return Search;

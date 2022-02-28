@@ -3,12 +3,12 @@
  */
 export declare class Queue<T> {
     /**
-     * @description max length
+     * @description max length of the queue
      * @private
      */
     private _max;
     /**
-     * @description current queue
+     * @description current queue (use instance.getQueue() instead)
      * @private
      */
     private _queue;
@@ -41,7 +41,7 @@ export declare class Queue<T> {
      */
     circle(n: number, reverse?: boolean): void;
     /**
-     * @description clear the queue and reset it`s max-length to `n` (if need)
+     * @description clear the queue and reset it`s max-length to 'n' (if need)
      */
     clear(n?: number): void;
 }

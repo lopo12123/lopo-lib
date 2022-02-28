@@ -15,7 +15,7 @@ export declare class Stack<T> {
     /**
      * @description create a stack with max length
      */
-    static create<_T>(max: number): Stack<unknown>;
+    static create<_T>(max: number): Stack<_T>;
     /**
      * @description create a stack with max length
      */

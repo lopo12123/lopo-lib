@@ -7,5 +7,5 @@ export declare class Search {
      * @param childKey the key of child branches
      * @param resultFilter do filter with the target node before return
      */
-    static dfs<TreeNode extends object>(root: TreeNode, condition: (node: TreeNode) => boolean, childKey?: string, resultFilter?: (node: TreeNode) => any): any | null;
+    static dfs<TreeNode extends object, K>(root: TreeNode, condition: (node: TreeNode) => boolean, childKey?: string, resultFilter?: (node: TreeNode) => K): K | null;
 }

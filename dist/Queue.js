@@ -1,12 +1,8 @@
 "use strict";
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Queue = void 0;
@@ -19,7 +15,7 @@ var Queue = /** @class */ (function () {
      */
     function Queue(max) {
         /**
-         * @description current queue
+         * @description current queue (use instance.getQueue() instead)
          * @private
          */
         this._queue = [];
@@ -68,7 +64,7 @@ var Queue = /** @class */ (function () {
         // overflow: items.length < max
         else {
             var nextFirst = this._queue.length + items.length - this._max;
-            this._queue = __spreadArray(__spreadArray([], this._queue.slice(nextFirst), true), items, true);
+            this._queue = __spreadArray(__spreadArray([], this._queue.slice(nextFirst)), items);
             return this._max;
         }
     };
@@ -94,7 +90,7 @@ var Queue = /** @class */ (function () {
         }
     };
     /**
-     * @description clear the queue and reset it`s max-length to `n` (if need)
+     * @description clear the queue and reset it`s max-length to 'n' (if need)
      */
     Queue.prototype.clear = function (n) {
         this._queue = [];

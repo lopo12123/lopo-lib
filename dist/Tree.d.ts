@@ -7,7 +7,7 @@ export declare class Tree {
      */
     static TransKeyed_P2C(ori: Tree_FlatArray_PKeyed): Tree_FlatArray_CKeyed;
     /**
-     * @description [Tree_FlatArray] trans from `children-keyed` to `parent-keyed`
+     * @description [Tree_FlatArray] trans from `child-keyed` to `parent-keyed`
      */
     static TransKeyed_C2P(ori: Tree_FlatArray_CKeyed): Tree_FlatArray_PKeyed;
     /** Multilayer to FlatArray (with parent keyed) */
