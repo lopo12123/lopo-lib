@@ -210,7 +210,7 @@ export default defineComponent({
             padding: 10px 0;
             pre {
                 font-family: Consolas, serif;
-                font-weight: bold;
+                line-height: 24px;
                 white-space: break-spaces;
             }
         }
