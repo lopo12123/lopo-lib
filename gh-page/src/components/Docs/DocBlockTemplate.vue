@@ -17,7 +17,10 @@
                 {{ blockValue.description }}
             </el-descriptions-item>
             <el-descriptions-item width="25%" label="Declaration" :span="2">
-                <code class="language-typescript" v-highlight>{{ blockValue.declaration }}</code>
+                <code class="language-typescript" v-highlight :key="index"
+                      v-for="(item, index) in blockValue.declaration.split('\n')">
+                    {{ item }}
+                </code>
             </el-descriptions-item>
             <el-descriptions-item width="25%" label="Example">
                 <code-block v-if="blockValue.example && blockValue.example !== ''" :doc-content="blockValue.example" />
