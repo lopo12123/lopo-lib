@@ -13,8 +13,11 @@
     "keywords": [
         "lopo",
         "commonly-used-function",
+        "clone",
         "search",
-        "tree flatten"
+        "queue",
+        "stack",
+        "tree structure"
     ],
     "author": "lopo",
     "license": "MIT",

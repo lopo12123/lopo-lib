@@ -9,25 +9,25 @@
 
 | usage | js 🤮 | ts 😋 |  |  
 | --- | --- | --- | --- |
-| `import { xxx } from 'lopo-lib'` | ✅ | ✅ | ✨ |  
+| `import { [className] } from 'lopo-lib'` | ✅ | ✅ | ✨ |  
 |  |  
-| `import { xxx } from 'lopo-lib/lib'` | ❌ | ✅ |  
-| `import { xxx } from 'lopo-lib/lib/index[.ts]'` | ❌ | ✅ |  
-| `import { xxx } from 'lopo-lib/lib/[module-name][.ts]'` | ❌ | ✅ | 😋 |
+| `import { [className] } from 'lopo-lib/lib'` | ❌ | ✅ |  
+| `import { [className] } from 'lopo-lib/lib/index[.ts]'` | ❌ | ✅ |  
+| `import { [className] } from 'lopo-lib/lib[module-name[.ts]]'` | ❌ | ✅ | 😋 |
 |  |  
-| `import { xxx } from 'lopo-lib/dist'` | ✅ | ✅ |  
-| `import { xxx } from 'lopo-lib/dist/index[.js]'` | ✅ | ✅ |  
-| `import { xxx } from 'lopo-lib/dist/[module-name][.js]'` | ✅ | ✅ | 😋 |  
+| `import { [className] } from 'lopo-lib/dist'` | ✅ | ✅ |  
+| `import { [className] } from 'lopo-lib/dist/index[.js]'` | ✅ | ✅ |  
+| `import { [className] } from 'lopo-lib/dist[/module-name[.js]]'` | ✅ | ✅ | 😋 |  
 |  |  
 | `const { [className] } = require('lopo-lib')` | ✅ | ✅ | ✨ |  
 |  |  
 | `const { [className] } = require('lopo-lib/lib')` | ❌ | ✅ |  
 | `const { [className] } = require('lopo-lib/lib/index[.ts]')` | ❌ | ✅ |
-| `const { [className] } = require('lopo-lib/lib/[module-name][.ts]` | ❌ | ✅ | 😋 |  
+| `const { [className] } = require('lopo-lib/lib[/module-name[.ts]]` | ❌ | ✅ | 😋 |  
 |  |  
 | `const { [className] } = require('lopo-lib/dist')` | ✅ | ✅ |  
 | `const { [className] } = require('lopo-lib/dist/index[.ts]')` | ✅ | ✅ |  
-| `const { [className] } = require('lopo-lib/dist/[module-name][.ts]` | ✅ | ✅ | 😋 |   
+| `const { [className] } = require('lopo-lib/dist[/module-name[.ts]]` | ✅ | ✅ | 😋 |   
 
 
 ### Docs  
