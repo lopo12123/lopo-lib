@@ -1,6 +1,6 @@
 {
     "name": "lopo-lib",
-    "version": "2.0.2-fixed",
+    "version": "3.0.1",
     "description": "some commonly used functions",
     "main": "./dist/index.js",
     "scripts": {
@@ -12,12 +12,7 @@
     },
     "keywords": [
         "lopo",
-        "commonly-used-function",
-        "clone",
-        "search",
-        "queue",
-        "stack",
-        "tree structure"
+        "commonly-used-function"
     ],
     "author": "lopo",
     "license": "MIT",
