@@ -8,8 +8,6 @@ node_modules
 *.rar
 *.7z
 
-test
-
 # local env files
 .env.local
 .env.*.local
