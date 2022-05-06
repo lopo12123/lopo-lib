@@ -31,22 +31,32 @@ function debounce<Args>(fn: (...args: Args) => void, min_hold: number): (...args
 }
 ```
 
-#### throttle 节流
-
-[lib](./lib/throttle.ts)  [test](./test/test-throttle.ts)
-
-```ts
-function throttle<Args>(fn: (...args: Args) => void, min_gap: number): (...args: Args) => void {
-    /** inner code */
-}
-```
-
 #### eventBus 事件管理
 
 [lib](./lib/eventBus.ts)  [test](./test/test-eventBus.ts)
 
 ```ts
 class EventBus<EventMap> {
+    /** inner code */
+}
+```
+
+#### promiseLike 类promise
+
+[lib](./lib/promiseLike.ts)  [test](./test/test-promiseLike.ts)
+
+```ts
+class PromiseLike<Result, Reason> {
+    /** inner code */
+}
+```
+
+#### throttle 节流
+
+[lib](./lib/throttle.ts)  [test](./test/test-throttle.ts)
+
+```ts
+function throttle<Args>(fn: (...args: Args) => void, min_gap: number): (...args: Args) => void {
     /** inner code */
 }
 ```
