@@ -1,6 +1,6 @@
 /**
  * [Example & Test]{@link https://github.com/lopo12123/lopo-lib/blob/master/test/test-eventBus.ts}
- * @description [事件监听] on注册事件, off注销事件, emit触发事件.
+ * @description [事件管理] on注册事件, off注销事件, emit触发事件.
  * @description `EventMap`(可选) 事件回调类型声明(type rather then interface), 可以提供完全的输入提示喝类型检查.
  * @example
  * import EventBus from "lopo-lib/lib/eventBus";
