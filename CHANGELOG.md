@@ -5,3 +5,4 @@
     - debounce 防抖  
     - throttle 节流  
     - clone 克隆  
+    - eventBus 事件管理
