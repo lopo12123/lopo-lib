@@ -20,7 +20,7 @@
  */
 const clone_deep = <T extends any>(obj: T, cache: WeakMap<object, object> = new WeakMap()): T => {
     // Function 构造新函数返回
-    if(typeof obj === 'function') return new Function('return ' + obj.toString())()
+    // if(typeof obj === 'function') return new Function('return ' + obj.toString())()
 
     // null 或 string number bigInt boolean symbol 等基本类型  - 直接返回
     if(obj === null || typeof obj !== 'object') return obj
