@@ -18,7 +18,7 @@
  * }
  * console.log(clone_deep(obj_deep))
  */
-const clone_deep = <T extends any>(obj: T, cache = new WeakMap()): T => {
+const clone_deep = <T extends any>(obj: T, cache: WeakMap<object, object> = new WeakMap()): T => {
     // Function 构造新函数返回
     if(typeof obj === 'function') return new Function('return ' + obj.toString())()
 
