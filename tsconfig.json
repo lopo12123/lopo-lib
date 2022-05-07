@@ -78,6 +78,6 @@
     },
     "include": [
         "./lib/*.ts",
-//        "./test/*.ts"
+        "./test/*.ts"
     ]
 }
