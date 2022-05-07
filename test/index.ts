@@ -1,4 +1,4 @@
-import { clone_deep, clone_json } from "../dist/lib/clone";
+import { clone_deep, clone_json } from "../dist/clone";
 
 /**
  * @example
