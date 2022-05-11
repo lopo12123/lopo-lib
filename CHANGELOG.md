@@ -7,3 +7,6 @@
     - clone 克隆  
     - eventBus 事件管理  
     - promiseList 类promise  
+- v3.0.2
+  - feat:
+    - frameTask 逐帧任务  
