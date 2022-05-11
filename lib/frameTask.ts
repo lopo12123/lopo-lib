@@ -222,6 +222,14 @@ class FrameTask {
     }
 
     // endregion
+
+    /**
+     * @description 注销事件管理, 即删除全部任务
+     * @see cancelTask_all
+     */
+    dispose() {
+        this.cancelTask_all()
+    }
 }
 
 export default FrameTask
