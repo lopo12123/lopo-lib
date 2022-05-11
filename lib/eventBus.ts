@@ -70,7 +70,7 @@ class EventBus<EventMap extends { [k: string]: (...args: any[]) => void }> {
      * @param eventName 事件名
      * @param args 回调的参数
      */
-    emit<EvName extends keyof EventMap>(eventName: EvName, ...args: Parameters<EventMap[EvName]>) {
+    emit<EvName extends keyof EventMap>(eventName: EvName, args: Parameters<EventMap[EvName]>) {
         this.#evMap.get(eventName)?.forEach((fn) => {
             fn(...args)
         })

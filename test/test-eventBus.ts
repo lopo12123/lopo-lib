@@ -23,15 +23,15 @@ const do_test = () => {
     evBus.on('sayHi', sayHi)
 
     // 触发事件
-    evBus.emit('greet', 'lopo')  // hello, lopo!
-    evBus.emit('sayHi')  // hi
+    evBus.emit('greet', [ 'lopo' ])  // hello, lopo!
+    evBus.emit('sayHi', [])  // hi
 
     // 注销事件
     evBus.off('sayHi')
 
     // 触发事件
-    evBus.emit('greet', 'lopo')  // hello, lopo!
-    evBus.emit('sayHi')  // nothing happen
+    evBus.emit('greet', [ 'lopo' ])  // hello, lopo!
+    evBus.emit('sayHi', [])  // nothing happen
 }
 
 do_test()
