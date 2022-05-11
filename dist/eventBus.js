@@ -72,7 +72,7 @@ class EventBus {
      * @param eventName 事件名
      * @param args 回调的参数
      */
-    emit(eventName, ...args) {
+    emit(eventName, args) {
         this.#evMap.get(eventName)?.forEach((fn) => {
             fn(...args);
         });

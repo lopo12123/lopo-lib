@@ -59,7 +59,7 @@ declare class EventBus<EventMap extends {
      * @param eventName 事件名
      * @param args 回调的参数
      */
-    emit<EvName extends keyof EventMap>(eventName: EvName, ...args: Parameters<EventMap[EvName]>): void;
+    emit<EvName extends keyof EventMap>(eventName: EvName, args: Parameters<EventMap[EvName]>): void;
     /**
      * @description 递归释放所有的回调函数的引用
      */
