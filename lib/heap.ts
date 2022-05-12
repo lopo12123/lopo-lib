@@ -10,10 +10,16 @@ class Heap_big_root {
         return this.#heap.slice()
     }
 
+    /**
+     * @description 堆的大小
+     */
     get size() {
         return this.#heap.length
     }
 
+    /**
+     * @description 获取最大元素
+     */
     get max() {
         return this.#heap[0]
     }
@@ -21,7 +27,7 @@ class Heap_big_root {
     /**
      * @description
      * @param nums 初始数据
-     * @param depth 最大深度
+     * @param depth 最大容量
      */
     constructor(nums: number[], depth: number = Infinity) {
         if(depth <= 0) throw new Error('think twice before you act!')
@@ -30,6 +36,10 @@ class Heap_big_root {
         this.#depth = depth
     }
 
+    /**
+     * @description 添加元素
+     * @param val
+     */
     add(val: number) {
         if(this.#heap.length === this.#depth
             && val <= this.#heap[this.size - 1]) return
@@ -49,6 +59,9 @@ class Heap_big_root {
         }
     }
 
+    /**
+     * @description 移除堆中最大的元素并返回
+     */
     delete() {
         if(this.size <= 2) {
             return this.#heap.shift()
@@ -88,14 +101,25 @@ class Heap_small_root {
         return this.#heap.slice()
     }
 
+    /**
+     * @description 堆的大小
+     */
     get size() {
         return this.#heap.length
     }
 
+    /**
+     * @description 获取最小元素
+     */
     get min() {
         return this.#heap[0]
     }
 
+    /**
+     * @description
+     * @param nums 初始数据
+     * @param depth 最大容量
+     */
     constructor(nums: number[], depth: number = Infinity) {
         if(depth <= 0) throw new Error('think twice before you act!')
 
@@ -103,6 +127,10 @@ class Heap_small_root {
         this.#depth = depth
     }
 
+    /**
+     * @description 添加元素
+     * @param val
+     */
     add(val: number) {
         if(this.#heap.length === this.#depth
             && val >= this.#heap[this.size - 1]) return
@@ -122,6 +150,9 @@ class Heap_small_root {
         }
     }
 
+    /**
+     * @description 移除堆中最小的元素并返回
+     */
     delete() {
         if(this.size <= 2) {
             return this.#heap.shift()
