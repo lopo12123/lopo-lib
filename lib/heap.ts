@@ -18,6 +18,11 @@ class Heap_big_root {
         return this.#heap[0]
     }
 
+    /**
+     * @description
+     * @param nums 初始数据
+     * @param depth 最大深度
+     */
     constructor(nums: number[], depth: number = Infinity) {
         if(depth <= 0) throw new Error('think twice before you act!')
 
@@ -87,7 +92,7 @@ class Heap_small_root {
         return this.#heap.length
     }
 
-    get max() {
+    get min() {
         return this.#heap[0]
     }
 
