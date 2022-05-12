@@ -46,9 +46,10 @@ class Heap_big_root {
 
     delete() {
         if(this.size <= 2) {
-            this.#heap.shift()
+            return this.#heap.shift()
         }
         else {
+            const head = this.#heap[0]
             const val = this.#heap.pop()!
             this.#heap[0] = val
 
@@ -56,7 +57,7 @@ class Heap_big_root {
             let largeChildIdx = this.#heap[2 * p + 1] > (this.#heap[2 * p + 2] ?? -Infinity) ? (2 * p + 1) : (2 * p + 2)
 
             while (largeChildIdx < this.size) {
-                if(this.#heap[p] >= this.#heap[largeChildIdx]) return;
+                if(this.#heap[p] >= this.#heap[largeChildIdx]) return head
                 else {
                     this.#heap[p] = this.#heap[largeChildIdx]
                     this.#heap[largeChildIdx] = val
@@ -64,6 +65,8 @@ class Heap_big_root {
                     largeChildIdx = (this.#heap[2 * p + 1] ?? Infinity) > (this.#heap[2 * p + 2] ?? -Infinity) ? (2 * p + 1) : (2 * p + 2)
                 }
             }
+
+            return head
         }
     }
 }
@@ -116,9 +119,10 @@ class Heap_small_root {
 
     delete() {
         if(this.size <= 2) {
-            this.#heap.shift()
+            return this.#heap.shift()
         }
         else {
+            const head = this.#heap[0]
             const val = this.#heap.pop()!
             this.#heap[0] = val
 
@@ -126,7 +130,7 @@ class Heap_small_root {
             let smallChildIdx = this.#heap[2 * p + 1] < (this.#heap[2 * p + 2] ?? -Infinity) ? (2 * p + 1) : (2 * p + 2)
 
             while (smallChildIdx < this.size) {
-                if(this.#heap[p] <= this.#heap[smallChildIdx]) return;
+                if(this.#heap[p] <= this.#heap[smallChildIdx]) return head
                 else {
                     this.#heap[p] = this.#heap[smallChildIdx]
                     this.#heap[smallChildIdx] = val
@@ -134,6 +138,8 @@ class Heap_small_root {
                     smallChildIdx = this.#heap[2 * p + 1] < (this.#heap[2 * p + 2] ?? -Infinity) ? (2 * p + 1) : (2 * p + 2)
                 }
             }
+
+            return head
         }
     }
 }
