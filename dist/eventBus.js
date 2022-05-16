@@ -40,10 +40,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * evBus.emit('sayHi')  // nothing happen
  */
 class EventBus {
+    #evMap;
     constructor() {
         this.#evMap = new Map();
     }
-    #evMap;
     /**
      * @description 注册事件回调
      * @param eventName 事件名

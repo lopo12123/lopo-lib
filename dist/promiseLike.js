@@ -30,12 +30,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * // 1651827351118 : res2:  2
  */
 class PromiseLike {
+    #status = 'pending';
+    #result = undefined;
+    #resolveCallback = undefined;
+    #reason = undefined;
+    #rejectCallback = undefined;
     constructor(executor) {
-        this.#status = 'pending';
-        this.#result = undefined;
-        this.#resolveCallback = undefined;
-        this.#reason = undefined;
-        this.#rejectCallback = undefined;
         try {
             executor((result) => {
                 this.#result = result;
@@ -52,11 +52,6 @@ class PromiseLike {
             this.#reason = e;
         }
     }
-    #status;
-    #result;
-    #resolveCallback;
-    #reason;
-    #rejectCallback;
     then(onFulFilled, onRejected) {
         return new PromiseLike((resolve, reject) => {
             if (this.#status === 'fulfilled') {

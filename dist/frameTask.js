@@ -1,32 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class SingleTask {
-    // endregion
-    /**
-     * @description
-     * @param taskName 任务名, 若任务名已存在则会覆盖旧任务(旧任务停止并删除)
-     * @param fn 任务回调
-     * @param args 回调参数, 无参则传 `[]`
-     * @param gap 执行间隔
-     */
-    constructor(taskName, fn, args, gap) {
-        // requestAnimationFrame返回的id, 用于取消 若为null表示当前为停止状态
-        this.#taskId = null;
-        // 上一次调用fn的时间 若为null表示当前为停止状态
-        this.#last_t = null;
-        this.#taskName = taskName;
-        this.#fn = fn;
-        this.#gap = gap;
-        this.#task = (t) => {
-            // 到达时间间隔则执行一次
-            if (this.#last_t === null || (t - this.#last_t) >= this.#gap) {
-                fn(...args);
-                this.#last_t = t;
-            }
-            if (!!this.#task)
-                this.#taskId = requestAnimationFrame(this.#task);
-        };
-    }
     // region 杂项
     // 执行间隔
     #gap;
@@ -39,12 +13,34 @@ class SingleTask {
     // 实例的任务封装
     #task;
     // requestAnimationFrame返回的id, 用于取消 若为null表示当前为停止状态
-    #taskId;
+    #taskId = null;
     // 上一次调用fn的时间 若为null表示当前为停止状态
-    #last_t;
+    #last_t = null;
     // 当前任务是否正在运行
     get ifRun() {
         return this.#last_t !== null;
+    }
+    // endregion
+    /**
+     * @description
+     * @param taskName 任务名, 若任务名已存在则会覆盖旧任务(旧任务停止并删除)
+     * @param fn 任务回调
+     * @param args 回调参数, 无参则传 `[]`
+     * @param gap 执行间隔
+     */
+    constructor(taskName, fn, args, gap) {
+        this.#taskName = taskName;
+        this.#fn = fn;
+        this.#gap = gap;
+        this.#task = (t) => {
+            // 到达时间间隔则执行一次
+            if (this.#last_t === null || (t - this.#last_t) >= this.#gap) {
+                fn(...args);
+                this.#last_t = t;
+            }
+            if (!!this.#task)
+                this.#taskId = requestAnimationFrame(this.#task);
+        };
     }
     /**
      * @description 运行/继续
@@ -79,19 +75,18 @@ class SingleTask {
     }
 }
 class FrameTask {
+    #fps;
+    #gap;
+    #tasks = new Map();
     /**
      * @param fps how many times the task should run in 1s.
      */
     constructor(fps = 60) {
-        this.#tasks = new Map();
         if (fps <= 0 || fps > 120)
             throw new Error('Invalid fps, available value is (0, 120].');
         this.#fps = fps;
         this.#gap = 1000 / fps;
     }
-    #fps;
-    #gap;
-    #tasks;
     // region 新增 运行 停止 删除
     /**
      * @description 新增任务
