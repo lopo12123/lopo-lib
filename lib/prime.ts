@@ -3,8 +3,20 @@ class Prime {
     #primeList: number[] = []
     #max: number
 
+    /**
+     * @description 返回 [1, n] 范围内的素数数量
+     * @description 构造函数中的 list 参数传 true 可用; 否则始终返回 0
+     */
     get primeCount() {
         return this.#primeList.length
+    }
+
+    /**
+     * @description 返回 [1, n] 范围内的所有素数
+     * @description 构造函数中的 list 参数传 true 可用; 否则始终返回空数组 []
+     */
+    get primeList() {
+        return this.#primeList
     }
 
     /**
@@ -15,7 +27,7 @@ class Prime {
      */
     constructor(n: number, map: boolean = true, list: boolean = true) {
         if(n < 2 || n >= Math.pow(2, 31)) throw new Error('require n in range [2, 2^31]')
-        else if(!map && !list) throw new Error('nonsense')
+        else if(!map && !list) throw new Error('the instance is nonsense because both [map] and [list] are set to false')
 
         this.#max = n
         if(map) this.filter1(n)
@@ -60,6 +72,11 @@ class Prime {
         }
     }
 
+    /**
+     * @description 返回 n 是否是素数
+     * @description 若 n小于2或大于构造函数传入的最大值, 则抛出错误
+     * @param n 待判断的数字
+     */
     is(n: number) {
         if(n < 2 || n > this.#max) throw new Error('invalid input number, out of range.')
         else if(this.#primeMap.length > 0) return this.#primeMap[n]

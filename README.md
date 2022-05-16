@@ -364,6 +364,93 @@ do_test_small()
 
 ---  
 
+#### prime 素数
+
+[lib](./lib/prime.ts) | [test](./test/test-prime.ts)
+
+- declaration
+
+```ts
+class Prime {
+    /**
+     * @description 返回 [2, n] 范围内的素数数量
+     * @description 构造函数中的 list 参数传 true 可用; 否则始终返回 0
+     */
+    get primeCount(): number {
+        /** inner code */
+    }
+
+    /**
+     * @description 返回 [2, n] 范围内的所有素数
+     * @description 构造函数中的 list 参数传 true 可用; 否则始终返回空数组 []
+     */
+    get primeList(): number {
+        /** inner code */
+    }
+
+    /**
+     * @description range [2, n]
+     * @param n
+     * @param map 是否埃氏筛生成哈希表
+     * @param list 是否欧拉筛生成素数列表
+     */
+    constructor(n: number, map: boolean = true, list: boolean = true) {
+        /** inner code */
+    }
+
+    /**
+     * @description 返回 n 是否是素数
+     * @description 若 n小于2或大于构造函数传入的最大值, 则抛出错误
+     * @param n 待判断的数字
+     */
+    is(n: number): boolean {
+        /** inner code */
+    }
+}
+```
+
+- example
+
+```ts
+const do_test_wrong = () => {
+    try {
+        const wrong_when_double_false = new Prime(10, false, false)
+    }
+    catch (e: any) {
+        console.log('error1: ', e.toString())
+    }
+
+    try {
+        const wrong_when_n_out_range = new Prime(1)
+    }
+    catch (e: any) {
+        console.log('error2: ', e.toString())
+    }
+}
+
+const do_test_correct = () => {
+    const primeFinder = new Prime(20)
+
+    console.log('is 5 prime: ', primeFinder.is(5))
+    console.log('is 16 prime: ', primeFinder.is(16))
+    console.log('how many prime number in range [1, 20]: ', primeFinder.primeCount)
+    console.log('show all the prime number in range [1, 20]: ', primeFinder.primeList)
+}
+
+do_test_wrong()
+// error1:  Error: the instance is nonsense because both [map] and [list] are set to false
+// error2:  Error: require n in range [2, 2^31]
+
+do_test_correct()
+// is 5 prime:  true
+// is 16 prime:  false
+// how many prime number in range [1, 20]:  8
+// show all the prime number in range [1, 20]:  [
+//    2,  3,  5,  7,
+//   11, 13, 17, 19
+// ]
+```
+
 #### promiseLike 类promise
 
 [lib](./lib/promiseLike.ts) | [test](./test/test-promiseLike.ts)

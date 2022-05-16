@@ -13,3 +13,4 @@
 - v3.0.3
   - feat:
     - heap 堆
+    - prime 素数判断  
