@@ -500,6 +500,37 @@ do_test()
 
 ---  
 
+#### randInRange 范围随机数
+
+[lib](./lib/randInRange.ts) | [test](./test/test-randInRange.ts)
+
+- declaration
+
+```ts
+function randInRange(left: number, right: number, exclude: "left" | "right" | "both" = 'right', step: number = 0): number {
+    /** inner code */
+}
+```
+
+- example
+
+```ts
+// default [0, 1)
+console.log(randInRange(0, 1))
+
+// same as default [0, 1)
+console.log(randInRange(0, 1, 'right'))
+
+// (0, 1]
+console.log(randInRange(0, 1, 'left'))
+
+// random in [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+console.log(randInRange(0, 1, 'right', 0.1))
+
+// random in [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+console.log(randInRange(0, 1, 'left', 0.1))
+```
+
 #### rangeMapping 区间映射
 
 [lib](./lib/rangeMapping.ts) | [test](./test/test-rangeMapping.ts)

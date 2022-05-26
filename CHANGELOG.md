@@ -17,3 +17,4 @@
 - v3.0.4  
   - feat:
     - rangeMapping 区间映射  
+    - randInRange 范围随机数  
