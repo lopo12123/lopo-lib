@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.debounce = void 0;
 /**
  * [Example & Test]{@link https://github.com/lopo12123/lopo-lib/blob/master/test/test-debounce.ts}
  * @description [防抖] 触发后静置时长达到 min_hold 后执行, 否则认为是抖动并忽略
@@ -32,4 +33,4 @@ const debounce = (fn, min_hold) => {
         }, min_hold);
     };
 };
-exports.default = debounce;
+exports.debounce = debounce;

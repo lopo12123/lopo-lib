@@ -64,4 +64,4 @@ declare class FrameTask {
      */
     dispose(): void;
 }
-export default FrameTask;
+export { FrameTask };

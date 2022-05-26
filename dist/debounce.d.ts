@@ -21,4 +21,4 @@
  * }, 500)
  */
 declare const debounce: <Args extends any[]>(fn: (...args: Args) => void, min_hold: number) => (...args: Args) => void;
-export default debounce;
+export { debounce };

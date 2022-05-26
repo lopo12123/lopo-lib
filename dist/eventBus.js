@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.EventBus = void 0;
 /**
  * [Example & Test]{@link https://github.com/lopo12123/lopo-lib/blob/master/test/test-eventBus.ts}
  * @description [事件管理] on注册事件, off注销事件, emit触发事件.
@@ -87,4 +88,4 @@ class EventBus {
         this.#evMap.clear();
     }
 }
-exports.default = EventBus;
+exports.EventBus = EventBus;

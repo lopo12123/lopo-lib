@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.throttle = void 0;
 /**
  * [Example & Test]{@link https://github.com/lopo12123/lopo-lib/blob/master/test/test-throttle.ts}
  * @description [节流] 触发结束后空闲时长达到 min_trigger 后才能再次触发, 否则忽略掉本次调用
@@ -31,4 +32,4 @@ const throttle = (fn, min_gap) => {
         }
     };
 };
-exports.default = throttle;
+exports.throttle = throttle;

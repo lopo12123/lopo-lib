@@ -34,4 +34,4 @@ declare class PromiseLike<Result, Reason> {
     constructor(executor: (resolve: resolveFn<Result>, reject?: rejectFn<Reason>) => void);
     then(onFulFilled: resolveFn<Result>, onRejected?: rejectFn<Reason>): PromiseLike<unknown, unknown>;
 }
-export default PromiseLike;
+export { PromiseLike };

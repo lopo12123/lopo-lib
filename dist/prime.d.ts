@@ -34,4 +34,4 @@ declare class Prime {
      */
     is(n: number): boolean;
 }
-export default Prime;
+export { Prime };

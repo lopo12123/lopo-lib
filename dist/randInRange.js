@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.randInRange = void 0;
 /**
  * @description 设置随机的离散距离
  * @param left 左界
@@ -74,4 +75,4 @@ const randInRange = (left, right, exclude = 'right', step = 0) => {
         }
     }
 };
-exports.default = randInRange;
+exports.randInRange = randInRange;

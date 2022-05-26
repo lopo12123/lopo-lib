@@ -65,4 +65,4 @@ declare class EventBus<EventMap extends {
      */
     dispose(): void;
 }
-export default EventBus;
+export { EventBus };

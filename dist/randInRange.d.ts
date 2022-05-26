@@ -21,4 +21,4 @@
  * console.log(randInRange(0, 1, 'left', 0.1))
  */
 declare const randInRange: (left: number, right: number, exclude?: 'left' | 'right' | 'both', step?: number) => number;
-export default randInRange;
+export { randInRange };

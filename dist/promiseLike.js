@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.PromiseLike = void 0;
 /**
  * [Example & Test]{@link https://github.com/lopo12123/lopo-lib/blob/master/test/test-promiseLike.ts}
  * @description 实现原生promise的then功能
@@ -75,4 +76,4 @@ class PromiseLike {
         });
     }
 }
-exports.default = PromiseLike;
+exports.PromiseLike = PromiseLike;

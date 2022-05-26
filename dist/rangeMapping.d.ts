@@ -23,4 +23,4 @@ declare function rangeMapping(from: [number, number], to: [number, number]): (va
  * console.log(rangeMapping([ 0, 1 ], [ 0, 100 ], 1.1))  // 110.00000000000001
  */
 declare function rangeMapping(from: [number, number], to: [number, number], val: number): number;
-export default rangeMapping;
+export { rangeMapping };

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.FrameTask = void 0;
 class SingleTask {
     // region 杂项
     // 执行间隔
@@ -213,4 +214,4 @@ class FrameTask {
         this.cancelTask_all();
     }
 }
-exports.default = FrameTask;
+exports.FrameTask = FrameTask;

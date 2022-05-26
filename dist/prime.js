@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Prime = void 0;
 class Prime {
     #primeMap = [];
     #primeList = [];
@@ -84,5 +85,4 @@ class Prime {
             return this.#primeList.includes(n);
     }
 }
-exports.default = Prime;
-let root = new Prime(20, false);
+exports.Prime = Prime;

@@ -21,4 +21,4 @@
  * }, 500)
  */
 declare const throttle: <Args extends any[]>(fn: (...args: Args) => void, min_gap: number) => (...args: Args) => void;
-export default throttle;
+export { throttle };
