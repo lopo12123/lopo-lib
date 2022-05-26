@@ -14,3 +14,6 @@
   - feat:
     - heap 堆
     - prime 素数判断  
+- v3.0.4  
+  - feat:
+    - rangeMapping 区间映射  

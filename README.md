@@ -500,6 +500,42 @@ do_test()
 
 ---  
 
+#### rangeMapping 区间映射
+
+[lib](./lib/rangeMapping.ts) | [test](./test/test-rangeMapping.ts)
+
+- declaration
+
+```ts
+// with 2 overload
+function rangeMapping(from: [ number, number ], to: [ number, number ]): (val: number) => number
+function rangeMapping(from: [ number, number ], to: [ number, number ], val: number): number
+function rangeMapping(from: [ number, number ], to: [ number, number ], val?: number): ((val: number) => number) | number {
+    /** inner code */
+}
+```
+
+- example
+
+```ts
+// overload 1
+const mapping = rangeMapping([ 0, 1 ], [ 0, 100 ])
+
+console.log(mapping(0))  // 0
+console.log(mapping(0.5))  // 50
+console.log(mapping(0.3))  // 30
+console.log(mapping(1.1))  // 110.00000000000001
+
+// overload 2
+console.log(rangeMapping([ 0, 1 ], [ 0, 100 ], 0))  // 0
+console.log(rangeMapping([ 0, 1 ], [ 0, 100 ], 0.5))  // 50
+console.log(rangeMapping([ 0, 1 ], [ 0, 100 ], 0.3))  // 30
+console.log(rangeMapping([ 0, 1 ], [ 0, 100 ], 1.1))  // 110.00000000000001
+
+// anyway, `110.00000000000001` is not totally wrong.
+// because in javascript, you will get this return for `1.1 * 100`.
+```
+
 #### throttle 节流
 
 [lib](./lib/throttle.ts) | [test](./test/test-throttle.ts)
