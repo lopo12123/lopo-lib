@@ -232,4 +232,4 @@ class FrameTask {
     }
 }
 
-export default FrameTask
+export { FrameTask }

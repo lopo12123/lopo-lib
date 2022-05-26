@@ -1,4 +1,4 @@
-import { clone_deep, clone_json } from "../dist/clone";
+import { clone_deep, clone_json } from "../lib";
 
 /**
  * @example
@@ -13,7 +13,7 @@ const do_test_json = () => {
         name: 'obj json',
         age: 11,
         greet: (who: string) => {
-            return `hello ${who}!`
+            return `hello ${ who }!`
         },
         symbol: Symbol('symbol as value'),
         [Symbol('symbol as key')]: 'symbol as key'
@@ -40,7 +40,7 @@ const do_test_deep = () => {
         age: 12,
         big: 456n,
         greet: (who: string) => {
-            return `hello ${who}!`
+            return `hello ${ who }!`
         },
         symbol: Symbol('symbol as value'),
         [Symbol('symbol as key')]: 'symbol as key'

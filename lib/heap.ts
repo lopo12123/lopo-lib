@@ -181,5 +181,6 @@ class Heap_small_root {
 }
 
 export {
-    Heap_big_root, Heap_small_root
+    Heap_big_root,
+    Heap_small_root
 }

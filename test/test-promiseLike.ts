@@ -1,4 +1,4 @@
-import PromiseLike from "../lib/promiseLike";
+import { PromiseLike } from "../lib/promiseLike";
 
 /**
  * @example

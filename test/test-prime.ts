@@ -1,4 +1,4 @@
-import Prime from "../lib/prime";
+import { Prime } from "../lib/prime";
 
 const do_test_wrong = () => {
     try {

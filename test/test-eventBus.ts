@@ -1,4 +1,4 @@
-import EventBus from "../lib/eventBus";
+import { EventBus } from "../lib/eventBus";
 
 const do_test = () => {
     // 添加事件类型定义 (可选)

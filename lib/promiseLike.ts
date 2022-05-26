@@ -84,4 +84,4 @@ class PromiseLike<Result, Reason> {
     }
 }
 
-export default PromiseLike
+export { PromiseLike }

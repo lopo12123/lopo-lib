@@ -71,4 +71,4 @@ const randInRange = (left: number, right: number, exclude: 'left' | 'right' | 'b
     }
 }
 
-export default randInRange
+export { randInRange }

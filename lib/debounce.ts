@@ -31,4 +31,4 @@ const debounce = <Args extends Array<any>>(fn: (...args: Args) => void, min_hold
     }
 }
 
-export default debounce
+export { debounce }

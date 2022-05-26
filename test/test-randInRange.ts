@@ -1,4 +1,4 @@
-import randInRange from "../lib/randInRange";
+import { randInRange } from "../lib/randInRange";
 
 // default [0, 1)
 console.log(randInRange(0, 1))

@@ -34,4 +34,4 @@ function rangeMapping(from: [ number, number ], to: [ number, number ], val?: nu
     }
 }
 
-export default rangeMapping
+export { rangeMapping }

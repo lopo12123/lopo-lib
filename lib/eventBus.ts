@@ -87,4 +87,4 @@ class EventBus<EventMap extends { [k: string]: (...args: any[]) => void }> {
     }
 }
 
-export default EventBus
+export { EventBus }

@@ -30,4 +30,4 @@ const throttle = <Args extends Array<any>>(fn: (...args: Args) => void, min_gap:
     }
 }
 
-export default throttle
+export { throttle }

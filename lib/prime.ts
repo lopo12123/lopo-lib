@@ -84,7 +84,5 @@ class Prime {
     }
 }
 
-export default Prime
-
-let root = new Prime(20, false)
+export { Prime }
 

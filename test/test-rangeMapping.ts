@@ -1,4 +1,4 @@
-import rangeMapping from "../lib/rangeMapping";
+import { rangeMapping } from "../lib/rangeMapping";
 
 // overload 1
 const mapping = rangeMapping([ 0, 1 ], [ 0, 100 ])
