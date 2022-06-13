@@ -3,13 +3,13 @@
 </script>
 
 <template>
-    <div class="home">
-        home animate
+    <div class="throttle">
+        throttle
     </div>
 </template>
 
 <style lang="scss" scoped>
-.home {
+.throttle {
     position: relative;
     width: 100%;
     height: 100%;

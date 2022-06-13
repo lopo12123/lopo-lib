@@ -3,13 +3,13 @@
 </script>
 
 <template>
-    <div class="home">
-        home animate
+    <div class="debounce">
+        debounce
     </div>
 </template>
 
 <style lang="scss" scoped>
-.home {
+.debounce {
     position: relative;
     width: 100%;
     height: 100%;

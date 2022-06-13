@@ -1,19 +1,43 @@
 <script lang="ts" setup>
+import { useRoute, useRouter } from "vue-router";
+import { computed } from "vue";
 
+const route = useRoute()
+const router = useRouter()
+
+// region 当前选中的项
+const activeBlock = computed(() => {
+    return route.path.split('/')[1] ?? ''
+})
+// endregion
+
+// region 跳转
+const jumpToBlock = (componentName: string) => {
+    router.push({ name: componentName })
+}
+// endregion
+
+// region 菜单列表
+type MenuBlock = {
+    block: string
+    componentName: string
+}
+const menuBlocks: MenuBlock[] = [
+    { block: 'debounce', componentName: 'Debounce' },
+    { block: 'throttle', componentName: 'Throttle' },
+    { block: 'cc', componentName: 'CC' },
+]
+// endregion
 </script>
 
 <template>
     <div class="menu-panel">
         <div class="menu-title">123</div>
-        <div class="menu-item">1</div>
-        <div class="menu-item">2</div>
-        <div class="menu-item">3</div>
-        <div class="menu-item">3</div>
-        <div class="menu-item">3</div>
-        <div class="menu-item">3</div>
-        <div class="menu-item">3</div>
-        <div class="menu-item">3</div>
-        <div class="menu-item">3</div>
+        <div :class="item.block === activeBlock ? 'menu-item-active' : 'menu-item-default'"
+             v-for="item in menuBlocks" :key="item.block"
+             @click="jumpToBlock(item.componentName)">
+            {{ item.block }}
+        </div>
     </div>
 </template>
 
@@ -37,7 +61,7 @@
         background-color: #e4e7ed;
     }
 
-    .menu-item {
+    %menu-item {
         width: 100%;
         height: 40px;
         padding: 0 20px;
@@ -47,9 +71,19 @@
         align-items: center;
         justify-content: flex-start;
         transition: background-color 1s ease-out;
-        &:hover{
-            background-color: #83e5cf80;
+    }
+
+    .menu-item-default {
+        @extend %menu-item;
+
+        &:hover {
+            background-color: #83e5cf33;
         }
+    }
+
+    .menu-item-active {
+        @extend %menu-item;
+        background-color: #83e5cf33;
     }
 }
 </style>
